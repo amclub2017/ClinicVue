@@ -1,0 +1,71 @@
+<template>
+  <div id="login">
+    <div class="row mt-5">
+      <div class="col-sm-9 col-md-7 col-lg-5 mx-auto">
+        <!-- <div class="text-center mb-4">
+          <img src="assets/images/logos/s2.png" class="rounded" alt="..." height="90" />
+        </div> -->
+        <div class="text-center">
+          <img class="logo" width="100" height="100" />
+        </div>
+        <div class="card my-5">
+          <div class="card-body mb-3 mt-3">
+            <form>
+              <div class="mb-3">
+                <label class="form-label">ชื่อผู้ใช้</label>
+                <input
+                  type="email"
+                  class="form-control"
+                  aria-describedby="emailHelp"
+                  placeholder="ฃื่อผู้ใช้"
+                  v-model="email"
+                />
+              </div>
+              <div class="mb-3">
+                <label class="form-label">รหัสผ่าน</label>
+                <input
+                  type="password"
+                  class="form-control"
+                  placeholder="รหัสผ่าน"
+                   v-model="password"
+                />
+              </div>
+              <button  @click.prevent="login" type="submit" class="btn btn-primary float-right">
+                เข้าสู่ระบบ
+              </button>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</template>
+
+<script>
+import authService from "./../services/auth";
+export default {
+  data() {
+    return {
+      email: "",
+      password: "",
+    };
+  },
+    methods: {
+    async login() {
+      try {
+        const loginForm = {
+          email: this.email,
+          password: this.password,
+        };
+        const resp = await authService.loginAdmin(loginForm);
+        console.log(resp);
+         localStorage.setItem("access_token", resp.access_token);
+          this.$router.push('/dashbordUser')
+      
+      } catch (error) {
+        console.log('asdasd');
+      }
+    },
+  },
+};
+</script>
