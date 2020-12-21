@@ -4,7 +4,7 @@ export default {
   loginAdmin(credentials) {
     console.log(credentials);
     return axios
-      .post(baseURL + '/user/login', credentials)
+      .post(baseURL + '/user/loginofficer', credentials)
       .then(response => response.data);
   },
   getToken(){

@@ -1,9 +1,9 @@
 import axios from 'axios';
 import { baseURL } from './api';
 export default {
-  getprofileUser() {
+  getprofileOfficer() {
     return axios
-      .get(baseURL + '/user/profile' , {
+      .get(baseURL + '/user/profileofficer' , {
          headers: {
           'Content-Type': 'application/json',
           'Authorization': 'Bearer ' + localStorage.getItem('access_token')

@@ -27,10 +27,14 @@
                   type="password"
                   class="form-control"
                   placeholder="รหัสผ่าน"
-                   v-model="password"
+                  v-model="password"
                 />
               </div>
-              <button  @click.prevent="login" type="submit" class="btn btn-primary float-right">
+              <button
+                @click.prevent="login"
+                type="submit"
+                class="btn btn-primary float-right"
+              >
                 เข้าสู่ระบบ
               </button>
             </form>
@@ -48,9 +52,10 @@ export default {
     return {
       email: "",
       password: "",
+      role: "",
     };
   },
-    methods: {
+  methods: {
     async login() {
       try {
         const loginForm = {
@@ -58,12 +63,18 @@ export default {
           password: this.password,
         };
         const resp = await authService.loginAdmin(loginForm);
-        console.log(resp);
-         localStorage.setItem("access_token", resp.access_token);
-          this.$router.push('/dashbordUser')
-      
+        localStorage.setItem("access_token", resp.access_token);
+        if (resp.role == "physician") {
+          this.$router.push("/dashbordPhysician");
+        }
+          if (resp.role == "officer") {
+          this.$router.push("/dashbordOfficer");
+        }
+           if (resp.role == "member") {
+          this.$router.push("/dashbordMember");
+        }
       } catch (error) {
-        console.log('asdasd');
+        alert("ไม่สำเร็จ");
       }
     },
   },

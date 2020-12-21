@@ -5,8 +5,9 @@ import appLayout from '../components/layouts/app-layout.vue'
 import backendLayout from '../components/layouts/backend-layouts.vue'
 import Login from '../components/pages/login.vue'
 import Home from '../components/pages/home/home.vue'
-import dashbordUser from '../components/pages/userPages/dashbordUser.vue'
+import dashbordPhysician from '../components/pages/userPages/dashbordPhysician/dashbordPhysician.vue'
 import dashbordMember from '../components/pages/memberPages/dashbordMember.vue'
+import dashbordOfficer from '../components/pages/userPages/dashbordOfficer/dashbordOfficer.vue'
 Vue.use(VueRouter)
 
 const routes = [
@@ -15,11 +16,22 @@ const routes = [
     redirect: 'home',
     component: backendLayout,
     children: [
+      
       {
-        path: '/home',
-        name: 'home',
-        component: Home
+        path: '/dashbordPhysician',
+        name: 'dashbordPhysician',
+        component: dashbordPhysician
       },
+      {
+        path: '/dashbordMember',
+        name: 'dashbordMember',
+        component: dashbordMember
+      },
+      {
+        path: '/dashbordOfficer',
+        name: 'dashbordOfficer',
+        component: dashbordOfficer
+      }
     ]
   },
   {
@@ -34,15 +46,11 @@ const routes = [
     ]
   },
   {
-    path: '/dashbordUser',
-    name: 'dashbordUser',
-    component: dashbordUser
+    path: '/home',
+    name: 'home',
+    component: Home
   },
-  {
-    path: '/dashbordMember',
-    name: 'dashbordMember',
-    component: dashbordMember
-  }
+  
 ]
 
 const router = new VueRouter({
