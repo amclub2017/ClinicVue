@@ -11,4 +11,14 @@ export default {
       })
       .then(response => response.data);
   },
+  getprofilePhysician() {
+    return axios
+      .get(baseURL + '/Physician/profile' , {
+         headers: {
+          'Content-Type': 'application/json',
+          'Authorization': 'Bearer ' + localStorage.getItem('access_token')
+        }
+      })
+      .then(response => response.data);
+  },
 };

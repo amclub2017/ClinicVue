@@ -1,27 +1,30 @@
 <template>
-  <div id="app-backend">
+  <div id="backend">
     <div class="wrapper">
       <Header />
       <Sidebar />
-      <div class="content-wrapper">
-        <div class="main-content">
-             <router-view />
+      <div class="main-panel">
+        <div class="container">
+          <router-view></router-view>
         </div>
+        <Footer />
       </div>
-  
-      <Footer />
     </div>
   </div>
 </template>
+
 <script>
 import Header from "./../shared/header";
-import Footer from "./../shared/footer";
 import Sidebar from "./../shared/sidebar";
+import Footer from "./../shared/footer";
 export default {
+  name: "backend",
   components: {
     Header,
-    Footer,
     Sidebar,
+    Footer,
   },
 };
 </script>
+
+<style></style>

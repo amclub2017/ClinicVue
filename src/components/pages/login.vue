@@ -12,12 +12,12 @@
           <div class="card-body mb-3 mt-3">
             <form>
               <div class="mb-3">
-                <label class="form-label">ชื่อผู้ใช้</label>
+                <label class="form-label">อีเมล</label>
                 <input
                   type="email"
                   class="form-control"
                   aria-describedby="emailHelp"
-                  placeholder="ฃื่อผู้ใช้"
+                  placeholder="กรอกอีเมล"
                   v-model="email"
                 />
               </div>
@@ -67,10 +67,10 @@ export default {
         if (resp.role == "physician") {
           this.$router.push("/dashbordPhysician");
         }
-          if (resp.role == "officer") {
+        if (resp.role == "officer") {
           this.$router.push("/dashbordOfficer");
         }
-           if (resp.role == "member") {
+        if (resp.role == "member") {
           this.$router.push("/dashbordMember");
         }
       } catch (error) {
