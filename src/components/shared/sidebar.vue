@@ -7,7 +7,7 @@
           <div class="sidebar-content">
             <ul class="nav nav-primary">
               <li class="nav-item">
-                <router-link to="dashboardOfficer" data-toggle="collapse">
+                <router-link to="/dashbordOfficer" data-toggle="collapse">
                   <i class="fas fa-home"></i>
                   <p>หน้าหลัก</p>
                 </router-link>
