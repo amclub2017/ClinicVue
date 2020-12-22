@@ -41,9 +41,10 @@ export default {
       })
       .then(response => response.data);
   },
-  editUser() {
+  editUser(uuid) {
+    console.log(uuid);
     return axios
-      .get(baseURL + '/user/${uuid}' , {
+      .get(baseURL + `/user/${uuid}` , {
          headers: {
           'Content-Type': 'application/json',
           'Authorization': 'Bearer ' + localStorage.getItem('access_token')
@@ -51,9 +52,19 @@ export default {
       })
       .then(response => response.data);
   },
-  updateUser() {
+  updateUser(form) {
     return axios
-      .get(baseURL + '/user/update/${uuid}' , {
+      .post(baseURL + `/user/update/` ,form, {
+         headers: {
+          'Content-Type': 'application/json',
+          'Authorization': 'Bearer ' + localStorage.getItem('access_token')
+        }
+      })
+      .then(response => response.data);
+  },
+    deleteUser(uuid) {
+    return axios
+      .delete(baseURL + `/user/${uuid}`  , {
          headers: {
           'Content-Type': 'application/json',
           'Authorization': 'Bearer ' + localStorage.getItem('access_token')

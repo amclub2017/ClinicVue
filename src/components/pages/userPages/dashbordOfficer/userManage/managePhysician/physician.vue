@@ -58,7 +58,10 @@
                         >
                           <i class="fas fa-edit"></i>
                         </button>
-                        <button class="btn btn-danger btn-sm mr-1 text-white">
+                        <button
+                          @click.prevent="deleteUser(data.uuid)"
+                          class="btn btn-danger btn-sm mr-1 text-white"
+                        >
                           <i class="fas fa-trash-alt"></i>
                         </button>
                       </td>
@@ -87,7 +90,7 @@
             </h5>
           </div>
           <div class="modal-body">
-            <form>
+            <form v-on:submit.prevent="updateUser">
               <div class="form-row">
                 <div class="form-group col-md-6">
                   <label for="inputEmail4">ชื่อ</label>
@@ -121,7 +124,7 @@
                     required
                   />
                 </div>
-                <div class="form-group col-md-6">
+                <div class="form-group col-md-6" hidden>
                   <label for="inputPassword4">รหัสผ่าน</label>
                   <input
                     type="password"
@@ -245,6 +248,9 @@ import userService from "./../../../../../services/user";
 export default {
   data() {
     return {
+      form: {
+        uuid: "",
+      },
       physician: [],
       first_name: "",
       last_name: "",
@@ -272,9 +278,29 @@ export default {
       this.physician = resp.data;
       console.log(resp);
     },
-    async editUser() {
+    async editUser(uuid) {
+      console.log(uuid);
+      const resp = await userService.editUser(uuid);
+      this.form.uuid = resp.data.uuid;
+      this.first_name = resp.data.first_name;
+      this.last_name = resp.data.last_name;
+      this.id_card = resp.data.id_card;
+      this.password = resp.data.password;
+      this.address = resp.data.address;
+      this.email = resp.data.email;
+      this.sex = resp.data.sex;
+      this.weight = resp.data.weight;
+      this.height = resp.data.height;
+      this.phone = resp.data.phone;
+      this.age = resp.data.age;
+      this.religion = resp.data.religion;
+      this.blood_type = resp.data.blood_type;
+      this.date_of_birth = resp.data.date_of_birth;
+    },
+    async updateUser() {
       try {
-        const updatePhysicianForm = {
+        const updateForm = {
+          uuid: this.form.uuid,
           first_name: this.first_name,
           last_name: this.last_name,
           id_card: this.id_card,
@@ -291,13 +317,16 @@ export default {
           date_of_birth: this.date_of_birth,
           role: "physician",
         };
-        const resp = await userService.updateUser(updatePhysicianForm);
-        console.log(resp);
-        alert("เพิ่มสำเร็จ");
-        this.$router.push("/physician");
+        const resp = await userService.updateUser(updateForm);
+        localStorage.setItem("access_token", resp.access_token);
+        alert("สำเร็จ");
       } catch (error) {
         alert("ไม่สำเร็จ");
       }
+    },
+    async deleteUser(uuid) {
+      await userService.deleteUser(uuid);
+      alert('ลบข้อมูลสำเร็จ')
     },
   },
 };
