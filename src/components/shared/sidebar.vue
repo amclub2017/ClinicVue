@@ -36,7 +36,7 @@
                         <span class="sub-item"></span>
                         <p>จัดการข้อมูลผู่ป่วย</p>
                       </router-link>
-                      <router-link to="#" class="nav-item">
+                      <router-link to="/equipment" class="nav-item">
                         <span class="sub-item"></span>
                         <p>จัดการอุปกรณ์</p>
                       </router-link>

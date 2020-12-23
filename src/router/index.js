@@ -10,6 +10,8 @@ import dashbordMember from '../components/pages/memberPages/dashbordMember.vue'
 import dashbordOfficer from '../components/pages/userPages/dashbordOfficer/dashbordOfficer.vue'
 import physician from "./../components/pages/userPages/dashbordOfficer/userManage/managePhysician/physician.vue";
 import addPhysician from "./../components/pages/userPages/dashbordOfficer/userManage/managePhysician/addPhysician/addPhysician.vue";
+import equipment from './../components/pages/userPages/dashbordOfficer/userManage/manageEquipmemt/equipment.vue';
+import  addEquipment  from './../components/pages/userPages/dashbordOfficer/userManage/manageEquipmemt/addEquipment/addEquipment.vue'
 Vue.use(VueRouter)
 
 const routes = [
@@ -43,6 +45,16 @@ const routes = [
         path: '/addPhysician',
         name: 'addPhysician',
         component: addPhysician
+      },
+       {
+        path: '/equipment',
+        name: 'equipment',
+        component: equipment
+      },
+        {
+        path: '/addEquipment',
+        name: 'addEquipment',
+        component: addEquipment
       }
     ]
   },

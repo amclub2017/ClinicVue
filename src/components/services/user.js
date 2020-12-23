@@ -72,4 +72,55 @@ export default {
       })
       .then(response => response.data);
   },
+    //equipments
+    addEquipment(equipmentForm) {
+    return axios
+      .post(baseURL + `/user/officer-createquipment`  ,equipmentForm, {
+         headers: {
+          'Content-Type': 'application/json',
+          'Authorization': 'Bearer ' + localStorage.getItem('access_token')
+        }
+      })
+      .then(response => response.data);
+  },
+    getEquipment() {
+    return axios
+      .get(baseURL + `/user/equipment`  , {
+         headers: {
+          'Content-Type': 'application/json',
+          'Authorization': 'Bearer ' + localStorage.getItem('access_token')
+        }
+      })
+      .then(response => response.data);
+  },
+  //   getOfficerEquipment() {
+  //   return axios
+  //     .get(baseURL + `/user/officer/getequipment`  , {
+  //        headers: {
+  //         'Content-Type': 'application/json',
+  //         'Authorization': 'Bearer ' + localStorage.getItem('access_token')
+  //       }
+  //     })
+  //     .then(response => response.data);
+  // },
+  //   updateEquipment(equipmentOfficerForm,uuid) {
+  //   return axios
+  //     .put(baseURL + `/user/equipment/:${uuid}`  , equipmentOfficerForm, {
+  //        headers: {
+  //         'Content-Type': 'application/json',
+  //         'Authorization': 'Bearer ' + localStorage.getItem('access_token')
+  //       }
+  //     })
+  //     .then(response => response.data);
+  // },
+    deleteEquipment(uuid) {
+    return axios
+      .delete(baseURL + `/user/equipment/${uuid}`  , {
+         headers: {
+          'Content-Type': 'application/json',
+          'Authorization': 'Bearer ' + localStorage.getItem('access_token')
+        }
+      })
+      .then(response => response.data);
+  },
 };
