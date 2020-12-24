@@ -32,7 +32,7 @@
                       </router-link>
                     </li>
                     <li>
-                      <router-link to="#" class="nav-item">
+                      <router-link to="/member" class="nav-item">
                         <span class="sub-item"></span>
                         <p>จัดการข้อมูลผู่ป่วย</p>
                       </router-link>

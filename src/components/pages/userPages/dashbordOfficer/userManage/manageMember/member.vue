@@ -3,7 +3,7 @@
     <div class="page-inner">
       <div class="page-header">
         <h4 class="page-title">
-          <i class="fa fa-book" aria-hidden="true"></i> จัดการข้อมูลเเพทย์
+          <i class="fa fa-book" aria-hidden="true"></i> จัดการข้อมูลผู้ป่วย
         </h4>
       </div>
       <div class="row">
@@ -11,7 +11,7 @@
           <div class="card">
             <div class="card-header">
               <div class="row">
-                <form v-on:submit.prevent="searchPhysician">
+                <form v-on:submit.prevent="searchMember">
                   <div class="col">
                     <div class="input-group">
                       <div class="input-group-prepend">
@@ -29,13 +29,13 @@
                   </div>
                 </form>
                 <div class="col">
-                  <router-link to="addPhysician">
+                  <router-link to="/addMember">
                     <button type="button" class="btn btn-secondary float-right">
                       <i
                         class="fa fa-plus-circle fa-lg mr-2"
                         aria-hidden="true"
                       ></i>
-                      เพิ่มเเพทย์
+                      เพิ่มข้อมูลผู้ป่าย
                     </button>
                   </router-link>
                 </div>
@@ -58,7 +58,7 @@
                     </tr>
                   </thead>
                   <tbody style="text-align: center">
-                    <tr v-for="data in physician" v-bind:key="data.id">
+                    <tr v-for="data in member" v-bind:key="data.id">
                       <td>{{ data.first_name }}</td>
                       <td>{{ data.last_name }}</td>
                       <td>{{ data.id_card }}</td>
@@ -66,7 +66,7 @@
                       <td>{{ data.date_of_birth }}</td>
                       <td>
                         <button
-                          @click.prevent="editUser(data.uuid)"
+                          @click.prevent="editMember(data.uuid)"
                           type="button"
                           class="btn btn-info btn-sm mr-1 text-white"
                           data-toggle="modal"
@@ -106,7 +106,7 @@
             </h5>
           </div>
           <div class="modal-body">
-            <form v-on:submit.prevent="updateUser">
+            <form v-on:submit.prevent="updateMember">
               <div class="form-row">
                 <div class="form-group col-md-6">
                   <label for="inputEmail4">ชื่อ</label>
@@ -277,7 +277,7 @@ export default {
       form: {
         uuid: "",
       },
-      physician: [],
+      member: [],
       first_name: "",
       last_name: "",
       id_card: "",
@@ -296,17 +296,17 @@ export default {
     };
   },
   mounted() {
-    this.officerGetProfilePhysician();
+    this.getallmember();
   },
   methods: {
-    async officerGetProfilePhysician() {
-      const resp = await userService.officerGetProfilePhysician();
-      this.physician = resp.data;
+    async getallmember() {
+      const resp = await userService.getallmember();
+      this.member = resp.data;
       console.log(resp);
     },
-    async editUser(uuid) {
+    async editMember(uuid) {
       console.log(uuid);
-      const resp = await userService.editUser(uuid);
+      const resp = await userService.editMember(uuid);
       this.form.uuid = resp.data.uuid;
       this.first_name = resp.data.first_name;
       this.last_name = resp.data.last_name;
@@ -323,7 +323,7 @@ export default {
       this.blood_type = resp.data.blood_type;
       this.date_of_birth = resp.data.date_of_birth;
     },
-    async updateUser() {
+    async updateMember() {
       try {
         const updateForm = {
           uuid: this.form.uuid,
@@ -344,7 +344,6 @@ export default {
           role: "physician",
         };
         await userService.updateUser(updateForm);
-
         alert("สำเร็จ");
       } catch (error) {
         alert("ไม่สำเร็จ");
@@ -354,12 +353,12 @@ export default {
       await userService.deleteUser(uuid);
       alert("ลบข้อมูลสำเร็จ");
     },
-    async searchPhysician() {
+    async searchMember() {
       try {
         const searchForm = {
           first_name: this.first_name,
         };
-         const resp = await userService.searchPhysician(searchForm);
+         const resp = await userService.searchMember(searchForm);
         console.log(resp);
         alert("สำเร็จ");
       } catch (error) {

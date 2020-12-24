@@ -51,7 +51,7 @@
                           class="btn btn-info btn-sm mr-1 text-white"
                           data-toggle="modal"
                           data-target="#exampleModal"
-                          @click.prevent="updateEquipment(data.uuid)"
+                          @click.prevent="editEquipment(data.uuid)"
                         >
                           <i class="fas fa-edit"></i>
                         </button>
@@ -155,7 +155,6 @@ export default {
   },
   mounted() {
     this.getEquipment();
-    this.getOfficerEquipment();
   },
   methods: {
     uploadImg(e) {
@@ -171,22 +170,22 @@ export default {
       this.equipment = resp.data;
       console.log(resp);
     },
-    // async getOfficerEquipment(uuid) {
-    //   const resp = await userService.getOfficerEquipment(uuid);
+    async editEquipment(uuid) {
+      const resp = await userService.editEquipment(uuid);
+      console.log(resp);
 
-    //   console.log(resp);
-    // },
-    // async updateEquipment(uuid) {
-    //       const equipmentOfficerForm = {
-    //       name: this.name,
-    //       detail: this.detail,
-    //       status: "1",
-    //       qty: this.qty,
-    //       img: this.img,
-    //     };
-    //   const resp = await userService.updateEquipment(uuid,equipmentOfficerForm);
-    //   console.log(resp);
-    // },
+    },
+    async updateEquipment() {
+          const equipmentOfficerForm = {
+          name: this.name,
+          detail: this.detail,
+          status: "1",
+          qty: this.qty,
+          img: this.img,
+        };
+      const resp = await userService.updateEquipment(equipmentOfficerForm);
+      console.log(resp);
+    },
     async deleteEquipment(uuid) {
       await userService.deleteEquipment(uuid);
         alert('ลบข้อมูลสำเร็จ')
