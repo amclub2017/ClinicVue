@@ -3,9 +3,9 @@ import VueRouter from 'vue-router'
 
 import appLayout from '../components/layouts/app-layout.vue'
 import backendLayout from '../components/layouts/backend-layouts.vue'
+import physicianlayouts from '../components/layouts/physician-layouts.vue'
 import Login from '../components/pages/login.vue'
 import Home from '../components/pages/home/home.vue'
-import dashbordPhysician from '../components/pages/userPages/dashbordPhysician/dashbordPhysician.vue'
 import dashbordMember from '../components/pages/memberPages/dashbordMember.vue'
 import dashbordOfficer from '../components/pages/userPages/dashbordOfficer/dashbordOfficer.vue'
 import physician from "./../components/pages/userPages/dashbordOfficer/userManage/managePhysician/physician.vue";
@@ -14,6 +14,24 @@ import equipment from './../components/pages/userPages/dashbordOfficer/userManag
 import addEquipment from './../components/pages/userPages/dashbordOfficer/userManage/manageEquipmemt/addEquipment/addEquipment.vue'
 import addMember from './../components/pages/userPages/dashbordOfficer/userManage/manageMember/addMember/addMember.vue'
 import member from './../components/pages/userPages/dashbordOfficer/userManage/manageMember/member.vue'
+import news from './../components/pages/userPages/dashbordOfficer/userManage/manageNews/news.vue'
+import addnews from './../components/pages/userPages/dashbordOfficer/userManage/manageNews/addnews/addNews.vue'
+
+
+//Physician
+import dashbordPhysician from '../components/pages/userPages/dashbordPhysician/dashbordPhysician.vue'
+import physicianRole from '../components/pages/userPages/dashbordPhysician/physicianManage/physician.vue'
+import physMember from '../components/pages/userPages/dashbordPhysician/memberManage/physMember.vue'
+import physAddMember from '../components/pages/userPages/dashbordPhysician/memberManage/physAddMember/physAddMember.vue'
+//Physician Equipment
+
+import physEquipment from '../components/pages/userPages/dashbordPhysician/manageEquipment/physEquipment.vue'
+import physAddEquipment from '../components/pages/userPages/dashbordPhysician/manageEquipment/physAddEquipment/physAddEquipment.vue'
+
+//news
+import physNews from '../components/pages/userPages/dashbordPhysician/manageNews/physNews.vue'
+import physAddNews from '../components/pages/userPages/dashbordPhysician/manageNews/physAddNews/physAddNews.vue'
+
 Vue.use(VueRouter)
 
 const routes = [
@@ -23,11 +41,6 @@ const routes = [
     component: backendLayout,
     children: [
       
-      {
-        path: '/dashbordPhysician',
-        name: 'dashbordPhysician',
-        component: dashbordPhysician
-      },
       {
         path: '/dashbordMember',
         name: 'dashbordMember',
@@ -63,10 +76,66 @@ const routes = [
         name: 'addMember',
         component: addMember
       },
-                {
+      {
         path: '/member',
         name: 'member',
         component: member
+      },
+      {
+        path: '/news',
+        name: 'news',
+        component: news
+      },
+      {
+        path: '/addnews',
+        name: 'addnews',
+        component: addnews
+      },
+    ]
+  },
+    {
+    path: '/physician',
+    component: physicianlayouts,
+    children: [
+      {
+        path: '/dashbordPhysician',
+        name: 'dashbordPhysician',
+        component: dashbordPhysician
+      },
+      {
+        path: '/physicianRole',
+        name: 'physicianRole',
+        component: physicianRole
+      },
+       {
+        path: '/physMember',
+        name: 'physMember',
+        component: physMember
+      },
+      {
+        path: '/physAddMember',
+        name: 'physAddMember',
+        component: physAddMember
+      },
+      {
+        path: '/physEquipment',
+        name: 'physEquipment',
+        component: physEquipment
+      },
+      {
+        path: '/physAddEquipment',
+        name: 'physAddEquipment',
+        component: physAddEquipment
+      },
+       {
+        path: '/physNews',
+        name: 'physNews',
+        component: physNews
+      },
+        {
+        path: '/physAddNews',
+        name: 'physAddNews',
+        component: physAddNews
       },
     ]
   },

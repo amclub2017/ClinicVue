@@ -1,5 +1,5 @@
 <template>
-  <div id="sidebar">
+  <div id="sidebarPhysician">
     <footer>
       <!-- Sidebar -->
       <div class="sidebar sidebar-style-2">
@@ -7,7 +7,7 @@
           <div class="sidebar-content">
             <ul class="nav nav-primary">
               <li class="nav-item">
-                <router-link to="/dashbordOfficer" data-toggle="collapse">
+                <router-link to="/physician/dashbordPhysician" data-toggle="collapse">
                   <i class="fas fa-home"></i>
                   <p>หน้าหลัก</p>
                 </router-link>
@@ -26,17 +26,17 @@
                 <div class="collapse" id="user">
                   <ul class="nav nav-collapse">
                     <li>
-                      <router-link to="/physician" class="nav-item">
+                      <router-link to="/physicianRole" class="nav-item">
                         <span class="sub-item"></span>
                         <p>จัดการข้อมูลเเพทย์</p>
                       </router-link>
                     </li>
                     <li>
-                      <router-link to="/member" class="nav-item">
+                      <router-link to="/physMember" class="nav-item">
                         <span class="sub-item"></span>
                         <p>จัดการข้อมูลผู่ป่วย</p>
                       </router-link>
-                      <router-link to="/equipment" class="nav-item">
+                      <router-link to="/physEquipment" class="nav-item">
                         <span class="sub-item"></span>
                         <p>จัดการอุปกรณ์</p>
                       </router-link>
@@ -45,9 +45,15 @@
                 </div>
               </li>
                <li class="nav-item">
-                <router-link to="/news" data-toggle="collapse">
+                <router-link to="/physNews" data-toggle="collapse">
                   <i class="la flaticon-web"></i>
                   <p>จัดการข่าวสาร</p>
+                </router-link>
+              </li>
+               <li class="nav-item">
+                <router-link to="#" data-toggle="collapse">
+                  <i class="la flaticon-web"></i>
+                  <p>จัดการข่าวคิว</p>
                 </router-link>
               </li>
             </ul>
@@ -58,20 +64,4 @@
     </footer>
   </div>
 </template>
-<script>
-export default {
-  name: "sidebar",
-  data() {
-    return {
-      isActive: true,
-    };
-  },
-  methods: {
-    clicktof5() {
-      location.reload();
-    },
-  },
-  computed: {},
-};
-</script>
-<style></style>
+

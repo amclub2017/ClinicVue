@@ -1,6 +1,6 @@
 <template>
   <div>
-    <p>Officer</p>
+    <p>User</p>
   </div>
 </template>
 <script>

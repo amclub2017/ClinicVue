@@ -76,13 +76,14 @@ export default {
     
     //ติด
   searchPhysician(searchform) {
-
+    console.log(localStorage.getItem('access_token'));
     return axios
-      .get(baseURL + `/user/searchphysician/` ,searchform, {
-         headers: {
+      .get(baseURL + `/user/searchphysician?first_name=${searchform.first_name}&last_name=${searchform.last_name}`, {
+     headers: {
           'Content-Type': 'application/json',
-          'Authorization': 'Bearer ' + localStorage.getItem('access_token')
+          'Authorization': 'Bearer ' + localStorage.getItem('access_token'),
         }
+
       })
       .then(response => response.data);
   },
@@ -118,9 +119,9 @@ export default {
       })
       .then(response => response.data);
   },
-    updateEquipment(equipmentOfficerForm) {
+    updateEquipment(uuid_equipment,equipmentOfficerForm) {
     return axios
-      .put(baseURL + `/user/equipment/`  , equipmentOfficerForm, {
+      .put(baseURL + `/ecuipment/${uuid_equipment}`  , equipmentOfficerForm, {
          headers: {
           'Content-Type': 'application/json',
           'Authorization': 'Bearer ' + localStorage.getItem('access_token')
@@ -130,7 +131,7 @@ export default {
   },
     deleteEquipment(uuid) {
     return axios
-      .delete(baseURL + `/user/equipment/${uuid}`  , {
+      .delete(baseURL + `/ecuipment/${uuid}`  , {
          headers: {
           'Content-Type': 'application/json',
           'Authorization': 'Bearer ' + localStorage.getItem('access_token')
@@ -152,7 +153,7 @@ export default {
   },
     getallmember() {
     return axios
-      .get(baseURL + `/user/getallmember` , {
+      .get(baseURL + `/user` , {
          headers: {
           'Content-Type': 'application/json',
           'Authorization': 'Bearer ' + localStorage.getItem('access_token')
@@ -163,7 +164,7 @@ export default {
     editMember(uuid) {
     console.log(uuid);
     return axios
-      .get(baseURL + `/user/getmember/${uuid}` , {
+      .get(baseURL + `/user/member/${uuid}` , {
          headers: {
           'Content-Type': 'application/json',
           'Authorization': 'Bearer ' + localStorage.getItem('access_token')
@@ -173,7 +174,61 @@ export default {
   },
     searchMember(searchform) {
     return axios
-      .get(baseURL + `/user/searchmember/` ,searchform, {
+      .get(baseURL + `/user/searchmember/?first_name=${searchform.first_name}&last_name=${searchform.last_name}` , {
+         headers: {
+          'Content-Type': 'application/json',
+          'Authorization': 'Bearer ' + localStorage.getItem('access_token')
+        }
+      })
+      .then(response => response.data);
+  },
+    
+    
+    //newsManage
+    
+    addNews(newsForm) {
+    return axios
+      .post(baseURL + `/news/createnews`  ,newsForm, {
+         headers: {
+          'Content-Type': 'application/json',
+          'Authorization': 'Bearer ' + localStorage.getItem('access_token')
+        }
+      })
+      .then(response => response.data);
+  },
+    getallNews() {
+    return axios
+      .get(baseURL + `/news` , {
+         headers: {
+          'Content-Type': 'application/json',
+          'Authorization': 'Bearer ' + localStorage.getItem('access_token')
+        }
+      })
+      .then(response => response.data);
+  },
+    editNews(uuid) {
+    return axios
+      .get(baseURL + `/news/${uuid}` , {
+         headers: {
+          'Content-Type': 'application/json',
+          'Authorization': 'Bearer ' + localStorage.getItem('access_token')
+        }
+      })
+      .then(response => response.data);
+  },
+    updateNews(uuid,newsForm) {
+    return axios
+      .put(baseURL + `/news/${uuid}`  , newsForm, {
+         headers: {
+          'Content-Type': 'application/json',
+          'Authorization': 'Bearer ' + localStorage.getItem('access_token')
+        }
+      })
+      .then(response => response.data);
+  },
+    deleteNews(uuid) {
+    return axios
+      .delete(baseURL + `/news/${uuid}`  , {
          headers: {
           'Content-Type': 'application/json',
           'Authorization': 'Bearer ' + localStorage.getItem('access_token')
@@ -182,3 +237,8 @@ export default {
       .then(response => response.data);
   },
 };
+
+
+
+
+

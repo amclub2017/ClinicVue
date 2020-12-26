@@ -1,9 +1,9 @@
 <template>
-  <div id="app">
+  <div id="addnews">
     <div class="page-inner">
       <div class="page-header">
         <h4 class="page-title">
-          <i class="fas fa-user-plus"></i> เพิ่มอุปกรณ์
+          <i class="fas fa-user-plus"></i> เพิ่มข่าวสาร
         </h4>
         <ul class="breadcrumbs"></ul>
       </div>
@@ -11,19 +11,19 @@
         <div class="col-md-12">
           <div class="card">
             <div class="card-body">
-              <form v-on:submit.prevent="createPhysician">
+              <form v-on:submit.prevent="addNews">
                 <div class="form-row">
                   <div class="form-group col-md-6">
-                    <label>ชื่อ</label>
+                    <label>หัวข้อข่าว</label>
                     <input
                       type="text"
                       class="form-control"
-                      v-model="name"
+                      v-model="title"
                       required
                     />
                   </div>
                   <div class="form-group col-md-6">
-                    <label>ข้อมูลอุปกรณ์</label>
+                    <label>ข้อมูลข่าว</label>
                     <textarea
                       type="text"
                       class="form-control"
@@ -33,16 +33,6 @@
                   </div>
                 </div>
                 <div class="form-row">
-                  <div class="form-group col-md-3">
-                    <label for="inputCity">จำนวน</label>
-                    <input
-                      type="number"
-                      class="form-control"
-                      id="inputCity"
-                      v-model="qty"
-                      required
-                    />
-                  </div>
                   <div class="form-group col-md-3">
                     <label for="inputZip">อัพโหลดภาพ</label>
                     <input
@@ -70,11 +60,10 @@ import userService from "./../../../../../../services/user";
 export default {
   data() {
     return {
-      name: "",
+      title: "",
       detail: "",
       status: "1",
       uuid_user: "",
-      qty: "",
       img: "",
     };
   },
@@ -87,22 +76,20 @@ export default {
       };
       reader.readAsDataURL(file);
     },
-    async createPhysician() {
+    async addNews() {
       try {
         const uuid = sessionStorage.getItem("uuid");
-        console.log(uuid);
-        const equipmentForm = {
-          name: this.name,
+        const newForm = {
+          title: this.title,
           detail: this.detail,
           status: "1",
           uuid_user: uuid,
-          qty: this.qty,
           img: this.img,
         };
-        const resp = await userService.addEquipment(equipmentForm);
+        const resp = await userService.addNews(newForm);
         console.log(resp);
         alert("เพิ่มสำเร็จ");
-        this.$router.push("/equipment");
+        this.$router.push("/news");
       } catch (error) {
         alert("ไม่สำเร็จ");
       }

@@ -1,5 +1,5 @@
 <template>
-  <div id="User">
+  <div id="physMember">
     <div class="page-inner">
       <div class="page-header">
         <h4 class="page-title">
@@ -42,7 +42,7 @@
                   </div>
                 </form>
                 <div class="col">
-                  <router-link to="/addMember">
+                  <router-link to="/physAddMember">
                     <button type="button" class="btn btn-secondary float-right">
                       <i
                         class="fa fa-plus-circle fa-lg mr-2"
@@ -283,7 +283,7 @@
   </div>
 </template>
 <script>
-import userService from "./../../../../../services/user";
+import physicianService from './../../../../services/physician';
 export default {
   data() {
     return {
@@ -313,13 +313,13 @@ export default {
   },
   methods: {
     async getallmember() {
-      const resp = await userService.getallmember();
+      const resp = await physicianService.getallmember();
       this.member = resp.data;
       console.log(resp);
     },
     async editMember(uuid) {
       console.log(uuid);
-      const resp = await userService.editMember(uuid);
+      const resp = await physicianService.editMember(uuid);
       this.form.uuid = resp.data.uuid;
       this.first_name = resp.data.first_name;
       this.last_name = resp.data.last_name;
@@ -356,14 +356,14 @@ export default {
           date_of_birth: this.date_of_birth,
           role: "physician",
         };
-        await userService.updateUser(updateForm);
+        await physicianService.updateUser(updateForm);
         alert("สำเร็จ");
       } catch (error) {
         alert("ไม่สำเร็จ");
       }
     },
     async deleteUser(uuid) {
-      await userService.deleteUser(uuid);
+      await physicianService.deleteUser(uuid);
       alert("ลบข้อมูลสำเร็จ");
     },
     async searchMember() {
@@ -372,7 +372,7 @@ export default {
           first_name: this.first_name,
           last_name: this.last_name,
         };
-        const resp = await userService.searchMember(
+        const resp = await physicianService.searchMember(
          searchForm
         );
           this.member = resp.data;

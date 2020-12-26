@@ -66,7 +66,7 @@
   </div>
 </template>
 <script>
-import userService from "./../../../../../../services/user";
+import physicianService from './../../../../../services/physician';
 export default {
   data() {
     return {
@@ -99,10 +99,10 @@ export default {
           qty: this.qty,
           img: this.img,
         };
-        const resp = await userService.addEquipment(equipmentForm);
+        const resp = await physicianService.addEquipment(equipmentForm);
         console.log(resp);
         alert("เพิ่มสำเร็จ");
-        this.$router.push("/equipment");
+        this.$router.push("/physEquipment");
       } catch (error) {
         alert("ไม่สำเร็จ");
       }

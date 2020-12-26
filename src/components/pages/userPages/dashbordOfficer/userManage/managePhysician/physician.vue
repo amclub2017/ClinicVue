@@ -15,12 +15,25 @@
                   <div class="col">
                     <div class="input-group">
                       <div class="input-group-prepend">
-                        <input
-                          type="text"
-                          placeholder="ค้นหา..."
-                          class="form-control"
-                          v-model="first_name"
-                        />
+                        <div class="row">
+                          <div class="col-6">
+                            <input
+                              type="text"
+                              placeholder="ชื่อ"
+                              class="form-control"
+                              v-model="first_name"
+                            />
+                          </div>
+                          <div class="col-6">
+                            <input
+                              type="text"
+                              placeholder="นามสกุล"
+                              class="form-control"
+                              v-model="last_name"
+                            />
+                          </div>
+                        </div>
+
                         <button type="submit" class="btn btn-search">
                           <i class="fa fa-search search-icon"></i>
                         </button>
@@ -358,8 +371,12 @@ export default {
       try {
         const searchForm = {
           first_name: this.first_name,
+          last_name: this.last_name,
         };
-         const resp = await userService.searchPhysician(searchForm);
+        const resp = await userService.searchPhysician(
+         searchForm
+        );
+          this.physician = resp.data;
         console.log(resp);
         alert("สำเร็จ");
       } catch (error) {

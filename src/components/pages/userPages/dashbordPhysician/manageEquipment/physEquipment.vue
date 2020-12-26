@@ -1,5 +1,5 @@
 <template>
-  <div id="User">
+  <div id="physEquipment">
     <div class="page-inner">
       <div class="page-header">
         <h4 class="page-title">
@@ -12,7 +12,7 @@
             <div class="card-header">
               <div class="row">
                 <div class="col">
-                  <router-link to="addEquipment">
+                  <router-link to="physAddEquipment">
                     <button type="button" class="btn btn-secondary float-right">
                       <i
                         class="fa fa-plus-circle fa-lg mr-2"
@@ -140,7 +140,7 @@
   </div>
 </template>
 <script>
-import userService from "./../../../../../services/user";
+import physician from './../../../../services/physician';
 export default {
   data() {
     return {
@@ -168,12 +168,12 @@ export default {
       reader.readAsDataURL(file);
     },
     async getEquipment() {
-      const resp = await userService.getEquipment();
+      const resp = await physician.getEquipment();
       this.equipment = resp.data;
       console.log(resp);
     },
     async editEquipment(uuid) {
-      const resp = await userService.editEquipment(uuid);
+      const resp = await physician.editEquipment(uuid);
       this.uuid = resp.data[0].uuid;
       this.name = resp.data[0].name;
       this.detail = resp.data[0].detail;
@@ -190,12 +190,12 @@ export default {
         qty: this.qty,
         img: this.img,
       };
-      const resp = await userService.updateEquipment(uuid_equipment,equipmentOfficerForm);
+      const resp = await physician.updateEquipment(uuid_equipment,equipmentOfficerForm);
        alert("เเก้ไขข้อมูลสำเร็จ");
       console.log(resp);
     },
     async deleteEquipment(uuid) {
-      await userService.deleteEquipment(uuid);
+      await physician.deleteEquipment(uuid);
       alert("ลบข้อมูลสำเร็จ");
     },
   },

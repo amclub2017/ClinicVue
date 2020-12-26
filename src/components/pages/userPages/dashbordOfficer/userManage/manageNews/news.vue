@@ -1,9 +1,9 @@
 <template>
-  <div id="User">
+  <div id="news">
     <div class="page-inner">
       <div class="page-header">
         <h4 class="page-title">
-          <i class="fa fa-book" aria-hidden="true"></i> จัดการอุปกรณ์
+          <i class="fa fa-book" aria-hidden="true"></i> จัดการข่าวสาร
         </h4>
       </div>
       <div class="row">
@@ -12,13 +12,13 @@
             <div class="card-header">
               <div class="row">
                 <div class="col">
-                  <router-link to="addEquipment">
+                  <router-link to="addnews">
                     <button type="button" class="btn btn-secondary float-right">
                       <i
                         class="fa fa-plus-circle fa-lg mr-2"
                         aria-hidden="true"
                       ></i>
-                      เพิ่มอุปกรณ์
+                      เพิ่มข่าวสาร
                     </button>
                   </router-link>
                 </div>
@@ -36,28 +36,27 @@
                       <th>ชื่อ</th>
                       <th>ภาพ</th>
                       <th>รายละเอียด</th>
-                      <th>จำนวน</th>
+                      <th>ตัวเลือก</th>
                     </tr>
                   </thead>
                   <tbody style="text-align: center">
-                    <tr v-for="data in equipment" v-bind:key="data.id">
-                      <td>{{ data.name }}</td>
+                    <tr v-for="data in news" v-bind:key="data.id">
+                      <td>{{ data.title }}</td>
                       <td><img v-bind:src="data.img" width="100" /></td>
                       <td>{{ data.detail }}</td>
-                      <td>{{ data.qty }}</td>
                       <td>
                         <button
                           type="button"
                           class="btn btn-info btn-sm mr-1 text-white"
                           data-toggle="modal"
                           data-target="#exampleModal"
-                          @click.prevent="editEquipment(data.uuid)"
+                          @click.prevent="editNews(data.uuid)"
                         >
                           <i class="fas fa-edit"></i>
                         </button>
                         <button
                           class="btn btn-danger btn-sm mr-1 text-white"
-                          @click.prevent="deleteEquipment(data.uuid)"
+                          @click.prevent="deleteNews(data.uuid)"
                         >
                           <i class="fas fa-trash-alt"></i>
                         </button>
@@ -86,14 +85,14 @@
             </h5>
           </div>
           <div class="modal-body">
-            <form v-on:submit.prevent="updateEquipment">
+            <form v-on:submit.prevent="updateNews">
               <div class="form-row">
                 <div class="form-group col-md-6">
                   <label>ชื่อ</label>
                   <input
                     type="text"
                     class="form-control"
-                    v-model="name"
+                    v-model="title"
                     required
                   />
                 </div>
@@ -109,16 +108,6 @@
               </div>
               <div class="form-row">
                 <div class="form-group col-md-3">
-                  <label for="inputCity">จำนวน</label>
-                  <input
-                    type="number"
-                    class="form-control"
-                    id="inputCity"
-                    v-model="qty"
-                    required
-                  />
-                </div>
-                <div class="form-group col-md-3">
                   <label for="inputZip">อัพโหลดภาพ</label>
                   <input
                     type="file"
@@ -128,7 +117,7 @@
                   />
                 </div>
               </div>
-              <img v-bind:src="img" width="100" />
+               <img v-bind:src="img" width="100" />
               <button type="submit" class="btn btn-primary float-right">
                 บันทึก
               </button>
@@ -144,19 +133,17 @@ import userService from "./../../../../../services/user";
 export default {
   data() {
     return {
-      equipment: [],
-      name: "",
+      news: [],
+      title: "",
       detail: "",
       status: "1",
       uuid_user: "",
-      qty: "",
       img: "",
-      uuid:'',
+      uuid:''
     };
   },
   mounted() {
-    this.getEquipment();
-    this.editEquipment();
+    this.getNews();
   },
   methods: {
     uploadImg(e) {
@@ -167,35 +154,32 @@ export default {
       };
       reader.readAsDataURL(file);
     },
-    async getEquipment() {
-      const resp = await userService.getEquipment();
-      this.equipment = resp.data;
+    async getNews() {
+      const resp = await userService.getallNews();
+      this.news = resp.data;
       console.log(resp);
     },
-    async editEquipment(uuid) {
-      const resp = await userService.editEquipment(uuid);
-      this.uuid = resp.data[0].uuid;
-      this.name = resp.data[0].name;
+    async editNews(uuid) {
+      const resp = await userService.editNews(uuid);
+      this.uuid = resp.data[0].uuid
+      this.title = resp.data[0].title;
       this.detail = resp.data[0].detail;
-      this.qty = resp.data[0].qty;
       this.img = resp.data[0].img;
     },
-    async updateEquipment() {
-       const uuid_equipment = this.uuid;
-       console.log(uuid_equipment);
-      const equipmentOfficerForm = {
-        name: this.name,
+    async updateNews() {
+        const uuid = this.uuid
+      const newsForm = {
+        title: this.title,
         detail: this.detail,
         status: "1",
-        qty: this.qty,
         img: this.img,
       };
-      const resp = await userService.updateEquipment(uuid_equipment,equipmentOfficerForm);
-       alert("เเก้ไขข้อมูลสำเร็จ");
+      const resp = await userService.updateNews(uuid, newsForm);
+      alert("เเก้ไขข้อมูลสำเร็จ");
       console.log(resp);
     },
-    async deleteEquipment(uuid) {
-      await userService.deleteEquipment(uuid);
+    async deleteNews(uuid) {
+      await userService.deleteNews(uuid);
       alert("ลบข้อมูลสำเร็จ");
     },
   },
