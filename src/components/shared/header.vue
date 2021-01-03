@@ -59,6 +59,7 @@
 </template>
 <script>
 import userService from "./../services/user";
+import memberService from "./../services/member";
 export default {
   data() {
     return {
@@ -68,6 +69,7 @@ export default {
   mounted() {
     this.profileOfficer();
     this.profilePhysician();
+    this.profilePMember();
   },
   methods: {
     async profileOfficer() {
@@ -80,12 +82,17 @@ export default {
       this.role = resp.data.role;
       console.log(resp);
     },
-      logout() {
-    const removeToken = localStorage.removeItem("access_token");
-    if (removeToken == null) {
-      this.$router.push("/login");
-    }
-  },
+    async profilePMember() {
+      const resp = await memberService.getprofileMember();
+      this.role = resp.data.role;
+       console.log(resp);
+    },
+    logout() {
+      const removeToken = localStorage.removeItem("access_token");
+      if (removeToken == null) {
+        this.$router.push("/login");
+      }
+    },
   },
 };
 </script>

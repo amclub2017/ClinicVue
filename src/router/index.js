@@ -4,9 +4,9 @@ import VueRouter from 'vue-router'
 import appLayout from '../components/layouts/app-layout.vue'
 import backendLayout from '../components/layouts/backend-layouts.vue'
 import physicianlayouts from '../components/layouts/physician-layouts.vue'
+import memberLayouts from '../components/layouts/member-layout.vue'
 import Login from '../components/pages/login.vue'
 import Home from '../components/pages/home/home.vue'
-import dashbordMember from '../components/pages/memberPages/dashbordMember.vue'
 import dashbordOfficer from '../components/pages/userPages/dashbordOfficer/dashbordOfficer.vue'
 import physician from "./../components/pages/userPages/dashbordOfficer/userManage/managePhysician/physician.vue";
 import addPhysician from "./../components/pages/userPages/dashbordOfficer/userManage/managePhysician/addPhysician/addPhysician.vue";
@@ -23,15 +23,16 @@ import dashbordPhysician from '../components/pages/userPages/dashbordPhysician/d
 import physicianRole from '../components/pages/userPages/dashbordPhysician/physicianManage/physician.vue'
 import physMember from '../components/pages/userPages/dashbordPhysician/memberManage/physMember.vue'
 import physAddMember from '../components/pages/userPages/dashbordPhysician/memberManage/physAddMember/physAddMember.vue'
-//Physician Equipment
-
 import physEquipment from '../components/pages/userPages/dashbordPhysician/manageEquipment/physEquipment.vue'
 import physAddEquipment from '../components/pages/userPages/dashbordPhysician/manageEquipment/physAddEquipment/physAddEquipment.vue'
+import physQueue from '../components/pages/userPages/dashbordPhysician/manageQueue/physQueue.vue'
 
 //news
 import physNews from '../components/pages/userPages/dashbordPhysician/manageNews/physNews.vue'
 import physAddNews from '../components/pages/userPages/dashbordPhysician/manageNews/physAddNews/physAddNews.vue'
 
+//member
+import dashbordMember from '../components/pages/memberPages/dashbordMember.vue'
 Vue.use(VueRouter)
 
 const routes = [
@@ -41,11 +42,6 @@ const routes = [
     component: backendLayout,
     children: [
       
-      {
-        path: '/dashbordMember',
-        name: 'dashbordMember',
-        component: dashbordMember
-      },
       {
         path: '/dashbordOfficer',
         name: 'dashbordOfficer',
@@ -137,6 +133,23 @@ const routes = [
         name: 'physAddNews',
         component: physAddNews
       },
+            {
+        path: '/physQueue',
+        name: 'physQueue',
+        component: physQueue
+      },
+    ]
+  },
+        {
+    path: '/member',
+    component: memberLayouts,
+    children: [
+      {
+        path: '/dashbordMember',
+        name: 'dashbordMember',
+        component: dashbordMember
+      },
+
     ]
   },
   {

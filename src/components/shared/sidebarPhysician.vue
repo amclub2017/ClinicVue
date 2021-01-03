@@ -7,7 +7,7 @@
           <div class="sidebar-content">
             <ul class="nav nav-primary">
               <li class="nav-item">
-                <router-link to="/physician/dashbordPhysician" data-toggle="collapse">
+                <router-link to="/dashbordPhysician" data-toggle="collapse">
                   <i class="fas fa-home"></i>
                   <p>หน้าหลัก</p>
                 </router-link>
@@ -51,9 +51,9 @@
                 </router-link>
               </li>
                <li class="nav-item">
-                <router-link to="#" data-toggle="collapse">
+                <router-link to="/physQueue" data-toggle="collapse">
                   <i class="la flaticon-web"></i>
-                  <p>จัดการข่าวคิว</p>
+                  <p>จัดการคิว</p>
                 </router-link>
               </li>
             </ul>
