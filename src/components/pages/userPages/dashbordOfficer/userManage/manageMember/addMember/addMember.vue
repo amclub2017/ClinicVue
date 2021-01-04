@@ -1,15 +1,17 @@
 <template>
-  <div id="addPhysician">
+  <div id="member">
     <div class="page-inner">
       <div class="page-header">
-        <h4 class="page-title"><i class="fas fa-user-plus"></i> เพิ่มเเพทย์</h4>
+        <h4 class="page-title">
+          <i class="fas fa-user-plus"></i> เพิ่มผู้ป่วย
+        </h4>
         <ul class="breadcrumbs"></ul>
       </div>
       <div class="row">
         <div class="col-md-12">
           <div class="card">
             <div class="card-body">
-              <form v-on:submit.prevent="createPhysician">
+              <form  v-on:submit.prevent="createMember">
                 <div class="form-row">
                   <div class="form-group col-md-6">
                     <label for="first_name">ชื่อ</label>
@@ -192,13 +194,14 @@ export default {
       religion: "",
       blood_type: "",
       date_of_birth: "",
-      role: "physician",
+      role: "member",
     };
   },
   methods: {
-    async createPhysician() {
+    async createMember() {
+      console.log("asd");
       try {
-        const createPhysicianForm = {
+        const memberForm = {
           first_name: this.first_name,
           last_name: this.last_name,
           id_card: this.id_card,
@@ -213,12 +216,12 @@ export default {
           religion: this.religion,
           blood_type: this.blood_type,
           date_of_birth: this.date_of_birth,
-          role: "physician",
+          role: "member",
         };
-        const resp = await userService.createPhysician(createPhysicianForm);
+        const resp = await userService.addMember(memberForm);
         console.log(resp);
         alert("เพิ่มสำเร็จ");
-        this.$router.push("/physician");
+        this.$router.push("/member");
       } catch (error) {
         alert("ไม่สำเร็จ");
       }

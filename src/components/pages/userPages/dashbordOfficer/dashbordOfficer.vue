@@ -1,6 +1,6 @@
 <template>
   <div>
-    <p>Officer</p>
+    <p>User</p>
   </div>
 </template>
 <script>
@@ -17,6 +17,7 @@ export default {
   methods: {
     async profileOfficer() {
       const resp = await userService.getprofileOfficer();
+      sessionStorage.setItem("uuid", resp.data.uuid);
       console.log(resp);
     },
   },

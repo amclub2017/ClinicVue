@@ -26,13 +26,19 @@
         </div>
       </div>
 
-      <nav class="navbar navbar-header navbar-expand-lg" data-background-color="blue2">
+      <nav
+        class="navbar navbar-header navbar-expand-lg"
+        data-background-color="blue2"
+      >
         <div class="container-fluid">
           <ul class="navbar-nav topbar-nav ml-md-auto align-items-center">
             <div style="font-size: 25px" class="row">
               <div>
                 <h6 class="mr-4" style="color: white">
-                  <i class="fa fa-user-circle-o fa-2x pr-2" aria-hidden="true"></i>
+                  <i
+                    class="fa fa-user-circle-o fa-2x pr-2"
+                    aria-hidden="true"
+                  ></i>
                   ตำเเหน่ง: {{ role }}
                 </h6>
               </div>
@@ -41,7 +47,7 @@
               <span style="margin: 50"></span>
             </div>
 
-            <button class="btn btn-danger btn-sm">
+            <button class="btn btn-danger btn-sm" @click="logout">
               <i class="fas fa-sign-out-alt"></i> Logout
             </button>
           </ul>
@@ -53,6 +59,7 @@
 </template>
 <script>
 import userService from "./../services/user";
+import memberService from "./../services/member";
 export default {
   data() {
     return {
@@ -62,6 +69,7 @@ export default {
   mounted() {
     this.profileOfficer();
     this.profilePhysician();
+    this.profilePMember();
   },
   methods: {
     async profileOfficer() {
@@ -71,7 +79,19 @@ export default {
     },
     async profilePhysician() {
       const resp = await userService.getprofilePhysician();
+      this.role = resp.data.role;
       console.log(resp);
+    },
+    async profilePMember() {
+      const resp = await memberService.getprofileMember();
+      this.role = resp.data.role;
+       console.log(resp);
+    },
+    logout() {
+      const removeToken = localStorage.removeItem("access_token");
+      if (removeToken == null) {
+        this.$router.push("/login");
+      }
     },
   },
 };

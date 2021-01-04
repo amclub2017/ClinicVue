@@ -1,15 +1,15 @@
 <template>
-  <div id="addPhysician">
+  <div>
     <div class="page-inner">
       <div class="page-header">
-        <h4 class="page-title"><i class="fas fa-user-plus"></i> เพิ่มเเพทย์</h4>
+        <h4 class="page-title"><i class="fas fa-user-plus"></i> จัดการข้อมูลส่วนตัวเเพทย์</h4>
         <ul class="breadcrumbs"></ul>
       </div>
       <div class="row">
         <div class="col-md-12">
           <div class="card">
             <div class="card-body">
-              <form v-on:submit.prevent="createPhysician">
+              <form v-on:submit.prevent="updatePhysician">
                 <div class="form-row">
                   <div class="form-group col-md-6">
                     <label for="first_name">ชื่อ</label>
@@ -44,14 +44,7 @@
                     />
                   </div>
                   <div class="form-group col-md-6">
-                    <label for="inputPassword4">รหัสผ่าน</label>
-                    <input
-                      type="password"
-                      class="form-control"
-                      id="inputPassword4"
-                      v-model="password"
-                      required
-                    />
+                    
                   </div>
                   <div class="form-group col-md-6">
                     <label>หมายเลขบัตรประจำตัว</label>
@@ -174,7 +167,7 @@
   </div>
 </template>
 <script>
-import userService from "./../../../../../../services/user";
+import physicianService from "./../../../../services/physician";
 export default {
   data() {
     return {
@@ -195,14 +188,35 @@ export default {
       role: "physician",
     };
   },
+  mounted() {
+    this.profilePhysician();
+  },
   methods: {
-    async createPhysician() {
+    async profilePhysician() {
+      const resp = await physicianService.getprofileOfficer();
+      this.uuid = resp.data.uuid;
+      this.first_name = resp.data.first_name;
+      this.last_name = resp.data.last_name;
+      this.id_card = resp.data.id_card;
+      this.address = resp.data.address;
+      this.email = resp.data.email;
+      this.sex = resp.data.sex;
+      this.weight = resp.data.weight;
+      this.height = resp.data.height;
+      this.phone = resp.data.phone;
+      this.age = resp.data.age;
+      this.religion = resp.data.religion;
+      this.blood_type = resp.data.blood_type;
+      this.date_of_birth = resp.data.date_of_birth;
+      console.log(resp);
+    },
+     async updatePhysician() {
       try {
-        const createPhysicianForm = {
+        const updateForm = {
+          uuid: this.uuid,
           first_name: this.first_name,
           last_name: this.last_name,
           id_card: this.id_card,
-          password: this.password,
           address: this.address,
           email: this.email,
           sex: this.sex,
@@ -213,16 +227,15 @@ export default {
           religion: this.religion,
           blood_type: this.blood_type,
           date_of_birth: this.date_of_birth,
-          role: "physician",
         };
-        const resp = await userService.createPhysician(createPhysicianForm);
-        console.log(resp);
-        alert("เพิ่มสำเร็จ");
-        this.$router.push("/physician");
+        await physicianService.updatePhysician(updateForm);
+
+        alert("สำเร็จ");
       } catch (error) {
         alert("ไม่สำเร็จ");
       }
     },
   },
+     
 };
 </script>
