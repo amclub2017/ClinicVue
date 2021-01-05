@@ -12,10 +12,14 @@
     "adminlte-vue": "^0.1.3",
     "bootstrap": "^4.5.3",
     "core-js": "^3.6.5",
+    "kalendar-vue": "^2.1.1",
     "nly-adminlte-vue": "^0.7.9",
+    "portal-vue": "^2.1.7",
     "vue": "^2.6.11",
     "vue-router": "^3.2.0",
+    "vue-simple-calendar": "^5.0.0",
     "vue2-admin-lte": "^0.4.3",
+    "vue2-simple-calendar": "^1.0.8",
     "vuex": "^3.4.0"
   },
   "devDependencies": {
