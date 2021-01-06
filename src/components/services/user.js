@@ -24,7 +24,7 @@ export default {
   },
   createPhysician(createPhysicianForm) {
     return axios
-      .post(baseURL + '/user/officer-createphysician' ,createPhysicianForm, {
+      .post(baseURL + '/user/createphysician' ,createPhysicianForm, {
          headers: {
           'Content-Type': 'application/json',
           'Authorization': 'Bearer ' + localStorage.getItem('access_token')
