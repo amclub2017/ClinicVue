@@ -63,6 +63,7 @@
                 >
                   <thead style="text-align: center">
                     <tr>
+                      <th>รหัสผู้ป่วย</th>
                       <th>ชื่อ</th>
                       <th>นามสกุล</th>
                       <th>เลขบัตรประจำตัว</th>
@@ -72,11 +73,13 @@
                   </thead>
                   <tbody style="text-align: center">
                     <tr v-for="data in member" v-bind:key="data.id">
+                      <td>{{ data.uuid }}</td>
                       <td>{{ data.first_name }}</td>
                       <td>{{ data.last_name }}</td>
                       <td>{{ data.id_card }}</td>
                       <td>{{ data.blood_type }}</td>
                       <td>{{ data.date_of_birth }}</td>
+
                       <td>
                         <button
                           @click.prevent="editMember(data.uuid)"
@@ -88,7 +91,7 @@
                           <i class="fas fa-edit"></i>
                         </button>
                         <button
-                          @click.prevent="editMember(data.uuid)"
+                          @click.prevent="getHistory(data.uuid)"
                           class="btn btn-success btn-sm mr-1 text-white"
                           data-toggle="modal"
                           data-target="#exampleModal2"
@@ -288,7 +291,7 @@
         </div>
       </div>
     </div>
-     <div
+    <div
       class="modal fade"
       id="exampleModal2"
       tabindex="-1"
@@ -316,10 +319,35 @@
                   />
                 </div>
               </div>
+              <!-- <div v-for="">
+
+              </div> -->
               <button type="submit" class="btn btn-primary float-right">
                 บันทึก
               </button>
             </form>
+
+            <hr>
+            
+            <div class="table-responsive">
+              <table
+                id="basic-datatables"
+                class="display table table-striped table-hover table-bordered"
+              >
+                <thead style="text-align: center">
+                  <tr>
+                    <!-- <th>วันที่</th> -->
+                    <th>ประวัติการรักษา</th>
+                  </tr>
+                </thead>
+                <tbody style="text-align: center">
+                  <tr v-for="data in historyData" v-bind:key="data.id">
+                    <!-- <td>{{ data.createdAt }}</td> -->
+                    <td>{{ data.treatment_details }}</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
           </div>
         </div>
       </div>
@@ -327,7 +355,7 @@
   </div>
 </template>
 <script>
-import physicianService from './../../../../services/physician';
+import physicianService from "./../../../../services/physician";
 export default {
   data() {
     return {
@@ -335,6 +363,7 @@ export default {
         uuid: "",
       },
       member: [],
+      historyData: [],
       first_name: "",
       last_name: "",
       id_card: "",
@@ -361,10 +390,11 @@ export default {
     async addHistory() {
       try {
         const uuid = sessionStorage.getItem("uuid");
+        const uuid_user = sessionStorage.getItem("uuid_user");
         const historyForm = {
           treatment_details: this.treatment_details,
           uuid_physicain: uuid,
-          uuid_user: this.form.uuid,
+          uuid_user: uuid_user,
         };
         const resp = await physicianService.addHistory(historyForm);
         console.log(resp);
@@ -378,7 +408,15 @@ export default {
       this.member = resp.data;
       console.log(resp);
     },
+    async getHistory(uuid) {
+      sessionStorage.setItem("uuid_user", uuid);
+      const uuid_user = uuid;
+      const resp = await physicianService.getHistory(uuid_user);
+      this.historyData = resp.data;
+      console.log(this.historyData);
+    },
     async editMember(uuid) {
+      sessionStorage.setItem("uuid_user", uuid);
       console.log(uuid);
       const resp = await physicianService.editMember(uuid);
       this.form.uuid = resp.data.uuid;
@@ -433,10 +471,8 @@ export default {
           first_name: this.first_name,
           last_name: this.last_name,
         };
-        const resp = await physicianService.searchMember(
-         searchForm
-        );
-          this.member = resp.data;
+        const resp = await physicianService.searchMember(searchForm);
+        this.member = resp.data;
         console.log(resp);
         alert("สำเร็จ");
       } catch (error) {

@@ -34,6 +34,9 @@ import physAddNews from '../components/pages/userPages/dashbordPhysician/manageN
 
 //member
 import dashbordMember from '../components/pages/memberPages/dashbordMember.vue'
+
+//receipt
+import receipt from '../components/pages/userPages/dashbordPhysician/receipt/createReceipt.vue'
 Vue.use(VueRouter)
 
 const routes = [
@@ -143,6 +146,11 @@ const routes = [
         path: '/physCreateHistory',
         name: 'physCreateHistory',
         component: physCreateHistory
+      }, 
+      {
+        path: '/receipt',
+        name: 'receipt',
+        component: receipt
       }, 
     ]
   },

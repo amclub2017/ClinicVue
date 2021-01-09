@@ -44,19 +44,25 @@
                   </ul>
                 </div>
               </li>
-               <li class="nav-item">
+              <li class="nav-item">
                 <router-link to="/physNews" data-toggle="collapse">
                   <i class="la flaticon-web"></i>
                   <p>จัดการข่าวสาร</p>
                 </router-link>
               </li>
-               <li class="nav-item">
+              <li class="nav-item">
                 <router-link to="/physQueue" data-toggle="collapse">
                   <i class="la flaticon-web"></i>
                   <p>จัดการคิว</p>
                 </router-link>
               </li>
-                 <!-- <li class="nav-item">
+              <li class="nav-item">
+                <router-link to="/receipt" data-toggle="collapse">
+                  <i class="la flaticon-web"></i>
+                  <p>ออกใบเสร็จ</p>
+                </router-link>
+              </li>
+              <!-- <li class="nav-item">
                 <router-link to="/physCreateHistory" data-toggle="collapse">
                   <i class="la flaticon-web"></i>
                   <p>เพิ่มประวัติผู้ป่วย</p>
@@ -70,4 +76,3 @@
     </footer>
   </div>
 </template>
-

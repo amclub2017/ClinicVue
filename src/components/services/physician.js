@@ -194,6 +194,19 @@ export default {
       })
       .then(response => response.data);
   },
+  getQueue() {
+    return axios
+        .get(baseURL + `/physician/getqueue`, {
+          headers: {
+            'Content-Type': 'application/json',
+            'Authorization': 'Bearer ' + localStorage.getItem('access_token')
+          }
+        })
+          .then(response => response.data);
+  },
+
+
+  //history
   addHistory(historyForm) {
     return axios
       .post(baseURL + `/physician/createhistory`, historyForm, {
@@ -204,6 +217,18 @@ export default {
       })
       .then(response => response.data);
   },
+  getHistory(uuid_user) {
+    return axios
+      .get(baseURL + `/physician/gethistory/${uuid_user}`,  {
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': 'Bearer ' + localStorage.getItem('access_token')
+        }
+      })
+      .then(response => response.data);
+  },
+
+
 };
 
 

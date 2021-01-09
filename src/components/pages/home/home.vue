@@ -59,23 +59,6 @@
               </div>
             </div>
           </div>
-          <div class="card mb-3">
-            <div class="row no-gutters">
-              <div class="col-md-4">
-                <img
-                  src="https://th.bing.com/th/id/OIP.G7yoL4N9E1zXlpj6iOkBLwHaEe?pid=Api&rs=1"
-                  class="card-img"
-                  alt="..."
-                />
-              </div>
-              <div class="col-md-8">
-                <div class="card-body">
-                  <h5 class="card-title">หัวข้อข่าว</h5>
-                  <p class="card-text">เนื้อหา</p>
-                </div>
-              </div>
-            </div>
-          </div>
         </div>
       </div>
     </div>
@@ -84,5 +67,23 @@
   </div>
 </template>
 <script>
-export default {};
+import userService from "./../../services/user";
+export default {
+  data() {
+    return {
+      news: [],
+    };
+  },
+  mounted() {
+    this.getNews();
+  },
+  methods: {
+    async getNews() {
+      const resp = await userService.getallNews();
+      this.news = resp.data;
+      console.log(resp);
+    },
+  },
+};
 </script>
+

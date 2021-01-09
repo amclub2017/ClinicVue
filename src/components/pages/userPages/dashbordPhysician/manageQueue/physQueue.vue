@@ -52,6 +52,15 @@
           <form v-on:submit.prevent="addQueue">
             <div class="form-row">
               <div class="form-group col-md-6">
+                <label>รหัสผู้ป่วย</label>
+                <input
+                  type="text"
+                  class="form-control"
+                  v-model="symptom"
+                  required
+                />
+              </div>
+              <div class="form-group col-md-6">
                 <label>อาการ</label>
                 <input
                   type="text"
@@ -61,9 +70,8 @@
                 />
               </div>
               <div class="form-group col-md-6">
-                <label>ขอมูลอาการ</label>
+                <label>ข้อมูลอาการ</label>
                 <textarea
-                  type="text"
                   class="form-control"
                   v-model="symptom_detail"
                   required
@@ -73,7 +81,12 @@
             <div class="form-row">
               <div class="form-group col-md-3">
                 <label for="inputZip">วันนัด</label>
-                <input v-model="appointment_date" type="datetime-local" name="" id="" />
+                <input
+                  v-model="appointment_date"
+                  type="datetime-local"
+                  name=""
+                  id=""
+                />
               </div>
             </div>
             <button type="submit" class="btn btn-primary float-right">
@@ -127,19 +140,18 @@ export default {
       useDefaultTheme: true,
       useHolidayTheme: true,
       useTodayIcons: false,
-      appointment_date: '',
-      symptom: '',
+      appointment_date: "",
+      symptom: "",
       status: "1",
-      symptom_detail: '',
-      uuid_physician: '',
+      symptom_detail: "",
+      uuid_physician: "",
+      uuid_user: "",
+      queue:[],
       items: [
         {
-          id: "e0",
-          startDate: "2018-01-05",
-        },
-        {
           id: "e1",
-          startDate: this.thisMonth(15, 18, 30),
+          startDate: this.thisMonth(15),
+           title: "g",
         },
         {
           startDate: this.thisMonth(15),
@@ -214,11 +226,6 @@ export default {
       };
     },
     myDateClasses() {
-      // This was added to demonstrate the dateClasses prop. Note in particular that the
-      // keys of the object are `yyyy-mm-dd` ISO date strings (not dates), and the values
-      // for those keys are strings or string arrays. Keep in mind that your CSS to style these
-      // may need to be fairly specific to make it override your theme's styles. See the
-      // CSS at the bottom of this component to see how these are styled.
       const o = {};
       const theFirst = this.thisMonth(1);
       const ides = [2, 4, 6, 9].includes(theFirst.getMonth()) ? 15 : 13;
@@ -234,8 +241,14 @@ export default {
   mounted() {
     this.newItemStartDate = this.isoYearMonthDay(this.today());
     this.newItemEndDate = this.isoYearMonthDay(this.today());
+    this.getQueue();
   },
   methods: {
+    async getQueue() {
+      const resp = await physicianService.getQueue();
+      this.queue = resp.data;
+      console.log(resp);
+    },
     async addQueue() {
       try {
         const uuid = sessionStorage.getItem("uuid");
@@ -243,6 +256,7 @@ export default {
           appointment_date: this.appointment_date,
           symptom: this.symptom,
           status: "1",
+          uuid_user: this.uuid_user,
           symptom_detail: this.symptom_detail,
           uuid_physician: uuid,
         };
@@ -296,10 +310,14 @@ export default {
     },
     clickTestAddItem() {
       this.items.push({
-        startDate: this.newItemStartDate,
+        appointment_date: this.newItemStartDate,
         endDate: this.newItemEndDate,
-        title: this.newItemTitle,
-        id: "e" + Math.random().toString(36).substr(2, 10),
+        sy: this.newItemTitle,
+        id:
+          "e" +
+          Math.random()
+            .toString(36)
+            .substr(2, 10),
       });
       this.message = "You added a calendar item!";
     },
