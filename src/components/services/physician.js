@@ -228,6 +228,18 @@ export default {
       .then(response => response.data);
   },
 
+  //receipt
+  addreceipt(addreipt) {
+    return axios
+      .post(baseURL + `/physician/creatreceipt`, addreipt, {
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': 'Bearer ' + localStorage.getItem('access_token')
+        }
+      })
+      .then(response => response.data);
+  },
+
 
 };
 
