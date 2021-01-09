@@ -88,6 +88,14 @@
                           <i class="fas fa-edit"></i>
                         </button>
                         <button
+                          @click.prevent="editMember(data.uuid)"
+                          class="btn btn-success btn-sm mr-1 text-white"
+                          data-toggle="modal"
+                          data-target="#exampleModal2"
+                        >
+                          <i class="fas fa-book"></i>
+                        </button>
+                        <button
                           @click.prevent="deleteUser(data.uuid)"
                           class="btn btn-danger btn-sm mr-1 text-white"
                         >
@@ -280,6 +288,42 @@
         </div>
       </div>
     </div>
+     <div
+      class="modal fade"
+      id="exampleModal2"
+      tabindex="-1"
+      aria-labelledby="exampleModalLabel"
+      aria-hidden="true"
+    >
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalLabel">
+              เพิ่มประวัติการรักษา
+            </h5>
+          </div>
+          <div class="modal-body">
+            <form v-on:submit.prevent="addHistory">
+              <div class="form-row">
+                <div class="form-group col-md-12">
+                  <textarea
+                    type="text"
+                    class="form-control"
+                    id="inputEmail4"
+                    v-model="treatment_details"
+                    rows="10"
+                    required
+                  />
+                </div>
+              </div>
+              <button type="submit" class="btn btn-primary float-right">
+                บันทึก
+              </button>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
   </div>
 </template>
 <script>
@@ -306,12 +350,29 @@ export default {
       blood_type: "",
       date_of_birth: "",
       role: "physician",
+      treatment_details: "",
+      uuid_physicain: "",
     };
   },
   mounted() {
     this.getallmember();
   },
   methods: {
+    async addHistory() {
+      try {
+        const uuid = sessionStorage.getItem("uuid");
+        const historyForm = {
+          treatment_details: this.treatment_details,
+          uuid_physicain: uuid,
+          uuid_user: this.form.uuid,
+        };
+        const resp = await physicianService.addHistory(historyForm);
+        console.log(resp);
+        alert("เพิ่มสำเร็จ");
+      } catch (error) {
+        alert("ไม่สำเร็จ");
+      }
+    },
     async getallmember() {
       const resp = await physicianService.getallmember();
       this.member = resp.data;

@@ -1,10 +1,10 @@
 import axios from 'axios';
 import { baseURL } from './api';
 export default {
-    updateUser(form) {
+  updateUser(form) {
     return axios
-      .put(baseURL + `/physician/` ,form, {
-         headers: {
+      .put(baseURL + `/physician/`, form, {
+        headers: {
           'Content-Type': 'application/json',
           'Authorization': 'Bearer ' + localStorage.getItem('access_token')
         }
@@ -13,62 +13,62 @@ export default {
   },
   getprofileOfficer() {
     return axios
-      .get(baseURL + '/physician/profile' , {
-         headers: {
+      .get(baseURL + '/physician/profile', {
+        headers: {
           'Content-Type': 'application/json',
           'Authorization': 'Bearer ' + localStorage.getItem('access_token')
         }
       })
       .then(response => response.data);
   },
-    updatePhysician(updateForm) {
+  updatePhysician(updateForm) {
     return axios
-      .put(baseURL + `/physician/`  , updateForm, {
-         headers: {
+      .put(baseURL + `/physician/`, updateForm, {
+        headers: {
           'Content-Type': 'application/json',
           'Authorization': 'Bearer ' + localStorage.getItem('access_token')
         }
       })
       .then(response => response.data);
   },
-    
-    
-   //member 
+
+
+  //member 
   addMember(memberForm) {
     return axios
-      .post(baseURL + `/physician/createmember`  ,memberForm, {
-         headers: {
+      .post(baseURL + `/physician/createmember`, memberForm, {
+        headers: {
           'Content-Type': 'application/json',
           'Authorization': 'Bearer ' + localStorage.getItem('access_token')
         }
       })
       .then(response => response.data);
   },
-    getallmember() {
+  getallmember() {
     return axios
-      .get(baseURL + `/physician/memberAll` , {
-         headers: {
+      .get(baseURL + `/physician/memberAll`, {
+        headers: {
           'Content-Type': 'application/json',
           'Authorization': 'Bearer ' + localStorage.getItem('access_token')
         }
       })
       .then(response => response.data);
   },
-    editMember(uuid) {
+  editMember(uuid) {
     console.log(uuid);
     return axios
-      .get(baseURL + `/physician/member/${uuid}` , {
-         headers: {
+      .get(baseURL + `/physician/member/${uuid}`, {
+        headers: {
           'Content-Type': 'application/json',
           'Authorization': 'Bearer ' + localStorage.getItem('access_token')
         }
       })
       .then(response => response.data);
   },
-    searchMember(searchform) {
+  searchMember(searchform) {
     return axios
-      .get(baseURL + `/physician/searchmember/?first_name=${searchform.first_name}&last_name=${searchform.last_name}` , {
-         headers: {
+      .get(baseURL + `/physician/searchmember/?first_name=${searchform.first_name}&last_name=${searchform.last_name}`, {
+        headers: {
           'Content-Type': 'application/json',
           'Authorization': 'Bearer ' + localStorage.getItem('access_token')
         }
@@ -76,20 +76,20 @@ export default {
       .then(response => response.data);
   },
   //equipments
-    addEquipment(equipmentForm) {
+  addEquipment(equipmentForm) {
     return axios
-      .post(baseURL + `/physician/createequipment`  ,equipmentForm, {
-         headers: {
+      .post(baseURL + `/physician/createequipment`, equipmentForm, {
+        headers: {
           'Content-Type': 'application/json',
           'Authorization': 'Bearer ' + localStorage.getItem('access_token')
         }
       })
       .then(response => response.data);
   },
-    getEquipment() {
+  getEquipment() {
     return axios
-      .get(baseURL + `/physician/equipment`  , {
-         headers: {
+      .get(baseURL + `/physician/equipment`, {
+        headers: {
           'Content-Type': 'application/json',
           'Authorization': 'Bearer ' + localStorage.getItem('access_token')
         }
@@ -98,82 +98,106 @@ export default {
   },
   editEquipment(uuid) {
     return axios
-      .get(baseURL + `/physician/getequipment/${uuid}`  , {
-         headers: {
+      .get(baseURL + `/physician/getequipment/${uuid}`, {
+        headers: {
           'Content-Type': 'application/json',
           'Authorization': 'Bearer ' + localStorage.getItem('access_token')
         }
       })
       .then(response => response.data);
   },
-    updateEquipment(uuid_equipment,equipmentOfficerForm) {
+  updateEquipment(uuid_equipment, equipmentOfficerForm) {
     return axios
-      .put(baseURL + `/physician/equipment/${uuid_equipment}`  , equipmentOfficerForm, {
-         headers: {
+      .put(baseURL + `/physician/equipment/${uuid_equipment}`, equipmentOfficerForm, {
+        headers: {
           'Content-Type': 'application/json',
           'Authorization': 'Bearer ' + localStorage.getItem('access_token')
         }
       })
       .then(response => response.data);
   },
-    deleteEquipment(uuid) {
+  deleteEquipment(uuid) {
     return axios
-      .delete(baseURL + `/physician/equipment/${uuid}`  , {
-         headers: {
+      .delete(baseURL + `/physician/equipment/${uuid}`, {
+        headers: {
           'Content-Type': 'application/json',
           'Authorization': 'Bearer ' + localStorage.getItem('access_token')
         }
       })
       .then(response => response.data);
   },
-    
-     
-    //newsManage
-    
-    addNews(newsForm) {
+
+
+  //newsManage
+
+  addNews(newsForm) {
     return axios
-      .post(baseURL + `/physician/createnews`  ,newsForm, {
-         headers: {
+      .post(baseURL + `/physician/createnews`, newsForm, {
+        headers: {
           'Content-Type': 'application/json',
           'Authorization': 'Bearer ' + localStorage.getItem('access_token')
         }
       })
       .then(response => response.data);
   },
-    getallNews() {
+  getallNews() {
     return axios
-      .get(baseURL + `/physician/news` , {
-         headers: {
+      .get(baseURL + `/physician/news`, {
+        headers: {
           'Content-Type': 'application/json',
           'Authorization': 'Bearer ' + localStorage.getItem('access_token')
         }
       })
       .then(response => response.data);
   },
-    editNews(uuid) {
+  editNews(uuid) {
     return axios
-      .get(baseURL + `/physician/getnews/${uuid}` , {
-         headers: {
+      .get(baseURL + `/physician/getnews/${uuid}`, {
+        headers: {
           'Content-Type': 'application/json',
           'Authorization': 'Bearer ' + localStorage.getItem('access_token')
         }
       })
       .then(response => response.data);
   },
-    updateNews(uuid,newsForm) {
+  updateNews(uuid, newsForm) {
     return axios
-      .put(baseURL + `/physician/news/${uuid}`  , newsForm, {
-         headers: {
+      .put(baseURL + `/physician/news/${uuid}`, newsForm, {
+        headers: {
           'Content-Type': 'application/json',
           'Authorization': 'Bearer ' + localStorage.getItem('access_token')
         }
       })
       .then(response => response.data);
   },
-    deleteNews(uuid) {
+  deleteNews(uuid) {
     return axios
-      .delete(baseURL + `/physician/news/${uuid}`  , {
-         headers: {
+      .delete(baseURL + `/physician/news/${uuid}`, {
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': 'Bearer ' + localStorage.getItem('access_token')
+        }
+      })
+      .then(response => response.data);
+  },
+
+
+
+  //queue
+  addQueue(queueForm) {
+    return axios
+      .post(baseURL + `/physician/createqueue`, queueForm, {
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': 'Bearer ' + localStorage.getItem('access_token')
+        }
+      })
+      .then(response => response.data);
+  },
+  addHistory(historyForm) {
+    return axios
+      .post(baseURL + `/physician/createhistory`, historyForm, {
+        headers: {
           'Content-Type': 'application/json',
           'Authorization': 'Bearer ' + localStorage.getItem('access_token')
         }
@@ -181,6 +205,9 @@ export default {
       .then(response => response.data);
   },
 };
+
+
+
 
 
 
