@@ -56,6 +56,12 @@
                   <p>จัดการคิว</p>
                 </router-link>
               </li>
+                 <!-- <li class="nav-item">
+                <router-link to="/physCreateHistory" data-toggle="collapse">
+                  <i class="la flaticon-web"></i>
+                  <p>เพิ่มประวัติผู้ป่วย</p>
+                </router-link>
+              </li> -->
             </ul>
           </div>
         </div>

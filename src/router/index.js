@@ -26,6 +26,7 @@ import physAddMember from '../components/pages/userPages/dashbordPhysician/membe
 import physEquipment from '../components/pages/userPages/dashbordPhysician/manageEquipment/physEquipment.vue'
 import physAddEquipment from '../components/pages/userPages/dashbordPhysician/manageEquipment/physAddEquipment/physAddEquipment.vue'
 import physQueue from '../components/pages/userPages/dashbordPhysician/manageQueue/physQueue.vue'
+import physCreateHistory from '../components/pages/userPages/dashbordPhysician/manageQueue/physCreateHistory'
 
 //news
 import physNews from '../components/pages/userPages/dashbordPhysician/manageNews/physNews.vue'
@@ -133,11 +134,16 @@ const routes = [
         name: 'physAddNews',
         component: physAddNews
       },
-            {
+      {
         path: '/physQueue',
         name: 'physQueue',
         component: physQueue
-      },
+      },    
+      {
+        path: '/physCreateHistory',
+        name: 'physCreateHistory',
+        component: physCreateHistory
+      }, 
     ]
   },
         {
