@@ -41,20 +41,20 @@
         <div class="card-header">
           <h1>ข่าวสาร</h1>
         </div>
-        <div class="card-body">
-          <div class="card mb-3 shadow">
-            <div class="row no-gutters">
-              <div class="col-md-4">
-                <img
-                  src="https://th.bing.com/th/id/OIP.G7yoL4N9E1zXlpj6iOkBLwHaEe?pid=Api&rs=1"
-                  class="card-img"
-                  alt="..."
-                />
-              </div>
-              <div class="col-md-8">
-                <div class="card-body">
-                  <h5 class="card-title">หัวข้อข่าว</h5>
-                  <p class="card-text">เนื้อหา</p>
+        <div v-for="data in news" v-bind:key="data.id">
+          <div class="card-body">
+            <div class="card mb-3 shadow">
+              <div class="row no-gutters">
+                <div class="col-md-4">
+                  <div class="container">
+                    <img v-bind:src="data.img" class="card-img" />
+                  </div>
+                </div>
+                <div class="col-md-8">
+                  <div class="card-body">
+                    <h5 class="card-title">{{ data.title }}</h5>
+                    <p class="card-text">{{ data.detail }}</p>
+                  </div>
                 </div>
               </div>
             </div>
@@ -63,7 +63,12 @@
       </div>
     </div>
     <!-- CSS only -->
-<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-giJF6kkoqNQ00vy+HMDP7azOuL0xtbfIcaT9wjKHr8RbDVddVHyTfAAsrekwKmP1" crossorigin="anonymous">
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-giJF6kkoqNQ00vy+HMDP7azOuL0xtbfIcaT9wjKHr8RbDVddVHyTfAAsrekwKmP1"
+      crossorigin="anonymous"
+    />
   </div>
 </template>
 <script>
@@ -86,4 +91,3 @@ export default {
   },
 };
 </script>
-

@@ -11,7 +11,7 @@
             <div class="card-body">
               <h1>My Calendar</h1>
               <calendar-view
-                :items="items"
+                :items="queue"
                 :show-date="showDate"
                 :time-format-options="{ hour: 'numeric', minute: '2-digit' }"
                 :enable-drag-drop="true"
@@ -48,6 +48,9 @@
         </div>
       </div>
       <div class="card">
+        <div class="card-header">
+          <h3>เพิ่มคิว</h3>
+        </div>
         <div class="card-body">
           <form v-on:submit.prevent="addQueue">
             <div class="form-row">
@@ -56,7 +59,7 @@
                 <input
                   type="text"
                   class="form-control"
-                  v-model="symptom"
+                  v-model="uuid_user"
                   required
                 />
               </div>
@@ -85,7 +88,7 @@
                   v-model="appointment_date"
                   type="datetime-local"
                   name=""
-                  id=""
+                  required
                 />
               </div>
             </div>
@@ -147,68 +150,6 @@ export default {
       uuid_physician: "",
       uuid_user: "",
       queue:[],
-      items: [
-        {
-          id: "e1",
-          startDate: this.thisMonth(15),
-           title: "g",
-        },
-        {
-          startDate: this.thisMonth(15),
-          title: "Single-day item with a long title",
-        },
-        {
-          id: "e3",
-          startDate: this.thisMonth(7, 9, 25),
-          endDate: this.thisMonth(10, 16, 30),
-          title: "Multi-day item with a long title and times",
-        },
-        {
-          id: "e4",
-          startDate: this.thisMonth(20),
-          title: "My Birthday!",
-          classes: "birthday",
-          url: "https://en.wikipedia.org/wiki/Birthday",
-        },
-        {
-          id: "foo",
-          startDate: this.thisMonth(29),
-          title: "Same day 1",
-        },
-        {
-          id: "e6",
-          startDate: this.thisMonth(29),
-          title: "Same day 2",
-          classes: "orange",
-        },
-        {
-          id: "e7",
-          startDate: this.thisMonth(29),
-          title: "Same day 3",
-        },
-        {
-          id: "e8",
-          startDate: this.thisMonth(29),
-          title: "Same day 4",
-          classes: "orange",
-        },
-        {
-          id: "e9",
-          startDate: this.thisMonth(29),
-          title: "Same day 5",
-        },
-        {
-          id: "e10",
-          startDate: this.thisMonth(29),
-          title: "Same day 6",
-          classes: "orange",
-        },
-        {
-          id: "e11",
-          startDate: this.thisMonth(21),
-          title: "Same day 7",
-        },
-      ],
     };
   },
   computed: {
@@ -242,12 +183,29 @@ export default {
     this.newItemStartDate = this.isoYearMonthDay(this.today());
     this.newItemEndDate = this.isoYearMonthDay(this.today());
     this.getQueue();
+    
+    console.log(this.thisMonth(15));
+
+    console.log(this.item);
   },
   methods: {
     async getQueue() {
       const resp = await physicianService.getQueue();
-      this.queue = resp.data;
-      console.log(resp);
+      // this.queue = resp.data[0].appointment_date;
+      console.log(resp.data.eLength);
+
+      for (let index = 0; index < resp.data.length; index++) {
+     
+        this.queue.push({
+             startDate:  resp.data[index].appointment_date,
+             title: resp.data[index].symptom,
+          
+          });
+        
+      }
+      console.log();
+      console.log(this.queue+'asdasd');
+      console.log( resp.data);
     },
     async addQueue() {
       try {
@@ -281,11 +239,14 @@ export default {
       return new Date(t.getFullYear(), t.getMonth(), d, h || 0, m || 0);
     },
     onClickDay(d) {
+
+       alert(d.toLocaleDateString())
       this.selectionStart = null;
       this.selectionEnd = null;
       this.message = `You clicked: ${d.toLocaleDateString()}`;
     },
     onClickItem(e) {
+      alert("ok")
       this.message = `You clicked: ${e.title}`;
     },
     setShowDate(d) {
