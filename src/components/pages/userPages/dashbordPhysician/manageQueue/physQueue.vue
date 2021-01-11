@@ -11,6 +11,7 @@
             <div class="card-body">
               <h1>My Calendar</h1>
               <calendar-view
+              
                 :items="queue"
                 :show-date="showDate"
                 :time-format-options="{ hour: 'numeric', minute: '2-digit' }"
@@ -287,6 +288,7 @@ export default {
 </script>
 
 <style scoped>
+
 #app {
   display: flex;
   flex-direction: row;
@@ -338,4 +340,28 @@ export default {
 .theme-default .cv-day.do-you-remember.the-21st .cv-day-number::after {
   content: "\1F30D\1F32C\1F525";
 }
+.theme-default .cv-header, .theme-default .cv-header-day {
+    background-color: #48abf7;
+}
+.cv-header-nav, .cv-header .periodLabel {
+    margin: 0.1em .6em;
+}
+.cv-header, .cv-header button {
+    border-style: solid;
+    border-color: #48abf7;
+    block-size: 50px;
+ 
+}
+.cv-wrapper, .cv-wrapper div {
+    box-sizing: border-box;
+    line-height: 50px;
+    font-size: 20px;
+}
+
+.theme-default .cv-header .periodLabel {
+    font-size: 1.5em;
+    font-weight: 900;
+ 
+}
+
 </style>
