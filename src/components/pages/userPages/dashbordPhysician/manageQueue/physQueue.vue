@@ -11,7 +11,6 @@
             <div class="card-body">
               <h1>My Calendar</h1>
               <calendar-view
-              
                 :items="queue"
                 :show-date="showDate"
                 :time-format-options="{ hour: 'numeric', minute: '2-digit' }"
@@ -48,55 +47,159 @@
           </div>
         </div>
       </div>
-      <div class="card">
-        <div class="card-header">
-          <h3>เพิ่มคิว</h3>
+      <div class="row">
+        <div class="col-md-6">
+          <div class="card">
+            <div class="card-header">
+              <h3>เพิ่มคิว</h3>
+            </div>
+            <div class="card-body">
+              <form v-on:submit.prevent="addQueue">
+                <div class="form-row">
+                  <div class="form-group col-md-6">
+                    <label>รหัสผู้ป่วย</label>
+                    <input
+                      type="text"
+                      class="form-control"
+                      v-model="uuid_users"
+                      required
+                    />
+                  </div>
+                  <div class="form-group col-md-6">
+                    <label>อาการ</label>
+                    <input
+                      type="text"
+                      class="form-control"
+                      v-model="symptoms"
+                      required
+                    />
+                  </div>
+                  <div class="form-group col-md-6">
+                    <label>ข้อมูลอาการ</label>
+                    <textarea
+                      class="form-control"
+                      v-model="symptom_details"
+                      required
+                    />
+                  </div>
+                </div>
+                <div class="form-row">
+                  <div class="form-group col-md-3">
+                    <label for="inputZip">วันนัด</label>
+                    <input
+                      v-model="appointment_dates"
+                      type="datetime-local"
+                      name=""
+                      required
+                    />
+                  </div>
+                </div>
+                <button type="submit" class="btn btn-primary float-right">
+                  บันทึก
+                </button>
+              </form>
+            </div>
+          </div>
         </div>
-        <div class="card-body">
-          <form v-on:submit.prevent="addQueue">
-            <div class="form-row">
-              <div class="form-group col-md-6">
-                <label>รหัสผู้ป่วย</label>
-                <input
-                  type="text"
-                  class="form-control"
-                  v-model="uuid_user"
-                  required
-                />
-              </div>
-              <div class="form-group col-md-6">
-                <label>อาการ</label>
-                <input
-                  type="text"
-                  class="form-control"
-                  v-model="symptom"
-                  required
-                />
-              </div>
-              <div class="form-group col-md-6">
-                <label>ข้อมูลอาการ</label>
-                <textarea
-                  class="form-control"
-                  v-model="symptom_detail"
-                  required
-                />
+        <div class="col-md-6">
+          <div class="card">
+            <div class="card-header">
+              <h3>ข้อมูลคิว</h3>
+            </div>
+            <div class="card-body">
+              <div class="table-responsive">
+                <table
+                  id="basic-datatables"
+                  class="display table table-striped table-hover table-bordered"
+                >
+                  <thead style="text-align: center">
+                    <tr>
+                      <th>อาการ</th>
+                      <th>รายละเอียด</th>
+                      <th>ตัวเลือก</th>
+                    </tr>
+                  </thead>
+                  <tbody style="text-align: center">
+                    <tr v-for="data in allqueue" v-bind:key="data.id">
+                      <td>{{ data.symptom }}</td>
+                      <td>{{ data.symptom_detail }}</td>
+                      <td>
+                        <button
+                          type="button"
+                          class="btn btn-info btn-sm mr-1 text-white"
+                          data-toggle="modal"
+                          data-target="#exampleModal"
+                          @click.prevent="editeQueue(data.uuid)"
+                        >
+                          <i class="fas fa-edit"></i>
+                        </button>
+                        <button
+                          class="btn btn-danger btn-sm mr-1 text-white"
+                          @click.prevent="deleteNews(data.uuid)"
+                        >
+                          <i class="fas fa-trash-alt"></i>
+                        </button>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
               </div>
             </div>
-            <div class="form-row">
-              <div class="form-group col-md-3">
-                <label for="inputZip">วันนัด</label>
-                <input
-                  v-model="appointment_date"
-                  type="datetime-local"
-                  name=""
-                  required
-                />
+          </div>
+        </div>
+      </div>
+    </div>
+    <div
+      class="modal fade"
+      id="exampleModal"
+      tabindex="-1"
+      aria-labelledby="exampleModalLabel"
+      aria-hidden="true"
+    >
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalLabel">
+              แก้ไขข้อมูลเเพทย์
+            </h5>
+          </div>
+          <div class="modal-body">
+            <form v-on:submit.prevent="updateQueue">
+              <div class="form-row">
+                <div class="form-group col-md-6">
+                  <label>อาการ</label>
+                  <input
+                    type="text"
+                    class="form-control"
+                    v-model="symptom"
+                    required
+                  />
+                </div>
+                <div class="form-group col-md-6">
+                  <label>ข้อมูลอาการ</label>
+                  <textarea
+                    class="form-control"
+                    v-model="symptom_detail"
+                    required
+                  />
+                </div>
               </div>
-            </div>
-            <button type="submit" class="btn btn-primary float-right">
-              บันทึก
-            </button>
-          </form>
+              <div class="form-row">
+                <div class="form-group col-md-3">
+                  <label for="inputZip">วันนัด</label>
+                  <input
+                    v-model="appointment_date"
+                    type="datetime-local"
+                    name=""
+                    required
+                  />
+                </div>
+              </div>
+              <button type="submit" class="btn btn-primary float-right">
+                บันทึก
+              </button>
+            </form>
+          </div>
         </div>
       </div>
     </div>
@@ -150,7 +253,13 @@ export default {
       symptom_detail: "",
       uuid_physician: "",
       uuid_user: "",
-      queue:[],
+      appointment_dates: "",
+      symptoms: "",
+      symptom_details: "",
+      uuid_users: "",
+      queue: [],
+      allqueue: [],
+      uuid:''
     };
   },
   computed: {
@@ -184,39 +293,61 @@ export default {
     this.newItemStartDate = this.isoYearMonthDay(this.today());
     this.newItemEndDate = this.isoYearMonthDay(this.today());
     this.getQueue();
-    
+
     console.log(this.thisMonth(15));
 
     console.log(this.item);
   },
   methods: {
+    async updateQueue() {
+      const uuid_physician = sessionStorage.getItem("uuid");
+      const uuid = this.uuid;
+      const queueForm = {
+        appointment_date: this.appointment_date,
+        symptom: this.symptom,
+        status: "1",
+        uuid_user: this.uuid_user,
+        symptom_detail: this.symptom_detail,
+        uuid_physician: uuid_physician,
+      };
+      const resp = await physicianService.updateQueue(uuid, queueForm);
+      alert("เเก้ไขข้อมูลสำเร็จ");
+      console.log(resp);
+    },
+    async editeQueue(uuid) {
+      const resp = await physicianService.editeQueue(uuid);
+      this.uuid = resp.data.uuid;
+      this.appointment_date = resp.data.appointment_date;
+      this.symptom = resp.data.symptom;
+      this.uuid_user = resp.data.uuid_user;
+      this.symptom_detail = resp.data.symptom_detail;
+      console.log(resp);
+    },
     async getQueue() {
       const resp = await physicianService.getQueue();
+      this.allqueue = resp.data;
       // this.queue = resp.data[0].appointment_date;
       console.log(resp.data.eLength);
 
       for (let index = 0; index < resp.data.length; index++) {
-     
         this.queue.push({
-             startDate:  resp.data[index].appointment_date,
-             title: resp.data[index].symptom,
-          
-          });
-        
+          startDate: resp.data[index].appointment_date,
+          title: resp.data[index].symptom,
+        });
       }
       console.log();
-      console.log(this.queue+'asdasd');
-      console.log( resp.data);
+      console.log(this.queue + "asdasd");
+      console.log(resp.data);
     },
     async addQueue() {
       try {
         const uuid = sessionStorage.getItem("uuid");
         const queueForm = {
-          appointment_date: this.appointment_date,
-          symptom: this.symptom,
+          appointment_date: this.appointment_dates,
+          symptom: this.symptoms,
           status: "1",
-          uuid_user: this.uuid_user,
-          symptom_detail: this.symptom_detail,
+          uuid_user: this.uuid_users,
+          symptom_detail: this.symptom_details,
           uuid_physician: uuid,
         };
         const resp = await physicianService.addQueue(queueForm);
@@ -240,15 +371,13 @@ export default {
       return new Date(t.getFullYear(), t.getMonth(), d, h || 0, m || 0);
     },
     onClickDay(d) {
-
-       alert(d.toLocaleDateString())
+      alert(d.toLocaleDateString());
       this.selectionStart = null;
       this.selectionEnd = null;
       this.message = `You clicked: ${d.toLocaleDateString()}`;
     },
     onClickItem(e) {
-      alert("ok")
-      this.message = `You clicked: ${e.title}`;
+      this.message = `You clicked: ${e.symptom}`;
     },
     setShowDate(d) {
       this.message = `Changing calendar view to ${d.toLocaleDateString()}`;
@@ -288,7 +417,6 @@ export default {
 </script>
 
 <style scoped>
-
 #app {
   display: flex;
   flex-direction: row;
@@ -340,28 +468,29 @@ export default {
 .theme-default .cv-day.do-you-remember.the-21st .cv-day-number::after {
   content: "\1F30D\1F32C\1F525";
 }
-.theme-default .cv-header, .theme-default .cv-header-day {
-    background-color: #48abf7;
+.theme-default .cv-header,
+.theme-default .cv-header-day {
+  background-color: #48abf7;
 }
-.cv-header-nav, .cv-header .periodLabel {
-    margin: 0.1em .6em;
+.cv-header-nav,
+.cv-header .periodLabel {
+  margin: 0.1em 0.6em;
 }
-.cv-header, .cv-header button {
-    border-style: solid;
-    border-color: #48abf7;
-    block-size: 50px;
- 
+.cv-header,
+.cv-header button {
+  border-style: solid;
+  border-color: #48abf7;
+  block-size: 50px;
 }
-.cv-wrapper, .cv-wrapper div {
-    box-sizing: border-box;
-    line-height: 50px;
-    font-size: 20px;
+.cv-wrapper,
+.cv-wrapper div {
+  box-sizing: border-box;
+  line-height: 50px;
+  font-size: 20px;
 }
 
 .theme-default .cv-header .periodLabel {
-    font-size: 1.5em;
-    font-weight: 900;
- 
+  font-size: 1.5em;
+  font-weight: 900;
 }
-
 </style>

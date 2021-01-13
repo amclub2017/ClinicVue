@@ -204,8 +204,26 @@ export default {
         })
           .then(response => response.data);
   },
-
-
+  editeQueue(uuid) {
+    return axios
+        .get(baseURL + `/physician/getqueueuuid/${uuid}`, {
+          headers: {
+            'Content-Type': 'application/json',
+            'Authorization': 'Bearer ' + localStorage.getItem('access_token')
+          }
+        })
+          .then(response => response.data);
+  },
+   updateQueue(uuid, queueForm) {
+    return axios
+      .put(baseURL + `/physician/updatequeue/${uuid}`, queueForm, {
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': 'Bearer ' + localStorage.getItem('access_token')
+        }
+      })
+      .then(response => response.data);
+  },
   //history
   addHistory(historyForm) {
     return axios
