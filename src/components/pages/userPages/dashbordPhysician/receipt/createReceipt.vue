@@ -2,12 +2,42 @@
   <div id="receipt">
     <div class="page-inner">
       <div class="page-header">
-        <h4 id="test" class="page-title"><i class="fas fa-user-plus"></i> ออกใบเสร็จ</h4>
+        <h4 id="test" class="page-title">
+          <i class="fas fa-user-plus"></i> ออกใบเสร็จ
+        </h4>
         <ul class="breadcrumbs"></ul>
       </div>
-      <div class="row">
-       <button class="btn btn-danger" @click="generatePdf">generate PDF</button>
+      <div ref="content">
+        <div class="card-body">
+          <div class="card-header text-center">
+            <h1>ใบเสร็จการรักษา</h1>
+          </div>
+          <div class="table-responsive">
+            <table
+              id="basic-datatables"
+              class="display table table-striped table-hover table-bordered"
+            >
+              <thead style="text-align: center">
+                <tr>
+                  <th>ข้อมูลทั่วไป</th>
+                  <th>ราคา</th>
+                </tr>
+              </thead>
+              <tbody style="text-align: center">
+                <!-- <tr v-for="data in news" v-bind:key="data.id"> -->
+                <tr>
+                  <td>{{ detail }}</td>
+                  <td>{{ price }}</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
       </div>
+      <button @click="downloadWithCSS">Download PDF</button>
+      <!-- <div class="row">
+       <button class="btn btn-danger" @click="generatePdf">generate PDF</button>
+      </div> -->
       <div class="row">
         <div class="col-md-12">
           <div class="card">
@@ -34,7 +64,8 @@
                   </div>
                   <div class="form-group col-md-6">
                     <label>ราคา</label>
-                    <textarea
+                    <input
+                      type="number"
                       class="form-control"
                       v-model="price"
                       required
@@ -54,74 +85,22 @@
 </template>
 <script>
 import jsPDF from "jspdf";
-import 'jspdf-autotable'
+import domtoimage from "dom-to-image";
 import physicianService from "./../../../../services/physician";
 export default {
-  name: 'receipt',
+  name: "receipt",
   data() {
     return {
       uuid_user: "",
       detail: "",
       price: "",
-      data:[]
+      data: [],
     };
   },
   methods: {
-      generatePdf() {
-        console.log("ok");
-
-  // const pdf = new jsPDF('p','mm','a4');
-
-  //     pdf.text(20,25,'Hello World');
-  //       pdf.text(160,25,'Hello World');
-  //       pdf.line(20, 20, 60, 20);
-  //     pdf.lines([[2,2],[-2,2],[1,1,2,2,3,3],[2,1]], 212,110, [1,1], 'F', false)
-  //     let header = ["id","name","test"];
-  //     let headerConfig = header.map(key=>({ 'name': key,'test': key,'id': key,
-  //     'prompt': key,
-  //     'width':75,
-  //     'align':'center',
-  //     'padding':0}));
-  //     let data = [{id: 1, name: "Peter", test: "Chris"},{id: '2', name: "Chris", test: '1'}];
-  //     pdf.table(20, 30, data, headerConfig);
-  //   var string = pdf.output('datauristring');
-  // var iframe = "<iframe width='100%' height='100%' src='" + string + "'></iframe>";
-  // var win = window.open();
-  // win.document.open();
-  // win.document.write(iframe);
-  // win.document.close();
-    //   pdf.save("pdf.pdf");
-
-const doc = new jsPDF('p', 'pt', 'letter')
-var data = ['5000','detaifdsfdsfl']
- 
-// It can parse html:
-// <table id="my-table"><!-- ... --></table>
-doc.autoTable({ html: '#my-table' })
- 
-// Or use javascript directly:
-doc.autoTable({
-  head: [['รายละเอียด', 'จำนวนเงิน']],
-  body: [
-    data,
-    ['ดเดกเกดหกดหกดหกด', '500'],
-    // ...
-  ],
-})
- 
-var string = doc.output('datauristring');
-  var iframe = "<iframe width='100%' height='100%' src='" + string + "'></iframe>";
-  var win = window.open();
-  win.document.open();
-  win.document.write(iframe);
-  win.document.close();
-
-//  pdf.addHTML($('#receipt')[0], function () {
-//      pdf.save('Test.pdf');
-//  });
-
-
-    
+    downloadWithCSS() {
+      /** WITH CSS */
+      
     },
     async createReceipt() {
       console.log("asd");
@@ -130,14 +109,36 @@ var string = doc.output('datauristring');
           uuid_user: this.uuid_user,
           detail: this.detail,
           price: this.price,
-         
         };
-    
+
         const resp = await physicianService.addreceipt(addreceipt);
         this.data = resp;
         console.log(this.data);
         alert("เพิ่มสำเร็จ");
-  
+        domtoimage
+        .toPng(this.$refs.content)
+        .then(function (dataUrl) {
+          var img = new Image();
+          img.src = dataUrl;
+          const doc = new jsPDF({
+            orientation: "landscape",
+          });
+          doc.addImage(img, "JPEG", 50, 0);
+          const date = new Date();
+          const filename =
+            "timechart_" +
+            date.getFullYear() +
+            ("0" + (date.getMonth() + 1)).slice(-2) +
+            ("0" + date.getDate()).slice(-2) +
+            ("0" + date.getHours()).slice(-2) +
+            ("0" + date.getMinutes()).slice(-2) +
+            ("0" + date.getSeconds()).slice(-2) +
+            ".pdf";
+          doc.save(filename);
+        })
+        .catch(function (error) {
+          console.error("oops, something went wrong!", error);
+        });
       } catch (error) {
         alert("ไม่สำเร็จ");
       }
