@@ -13,7 +13,7 @@
                 </router-link>
               </li>
                <li class="nav-item">
-                <router-link to="#" data-toggle="collapse">
+                <router-link to="/queue" data-toggle="collapse">
                   <i class="la flaticon-web"></i>
                   <p>จัดการคิว</p>
                 </router-link>

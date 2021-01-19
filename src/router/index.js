@@ -34,6 +34,7 @@ import physAddNews from '../components/pages/userPages/dashbordPhysician/manageN
 
 //member
 import dashbordMember from '../components/pages/memberPages/dashbordMember.vue'
+import queue from '../components/pages/memberPages/queue/queue'
 
 //receipt
 import receipt from '../components/pages/userPages/dashbordPhysician/receipt/createReceipt.vue'
@@ -162,6 +163,11 @@ const routes = [
         path: '/dashbordMember',
         name: 'dashbordMember',
         component: dashbordMember
+      },
+      {
+        path: '/queue',
+        name: 'queue',
+        component: queue
       },
 
     ]
